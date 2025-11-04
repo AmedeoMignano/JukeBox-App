@@ -30,6 +30,10 @@ public class RequestsService {
         var song = songsService.findById(payload.songId());
         if(!event.getRepertory().contains(song)) throw new IllegalArgumentException("Canzone non in repertorio");
 
+        boolean alreadyExist = requestsRepository.existByEventAndGuestAndSong(event,session,song);
+        if(alreadyExist){
+            throw new IllegalArgumentException("Hai già richiesto questo brano");
+        }
         Request request = new Request();
         request.setGuest(session);
         request.setSong(song);

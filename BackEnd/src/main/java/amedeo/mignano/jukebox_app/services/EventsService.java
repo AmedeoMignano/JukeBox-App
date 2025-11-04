@@ -95,7 +95,7 @@ public class EventsService {
         Event found = this.findById(id);
         found.setCurrentPhase(payload.phase());
         var saved = eventsRepository.save(found);
-        log.info("Stato Evento aggiornato");
+        log.info("Fase Evento aggiornato");
         return saved;
     }
     public Event updateRepertory(Long id, EventRepertoryUpdateDTO payload){
@@ -111,5 +111,9 @@ public class EventsService {
         return updated;
     }
 
+    public void delete(Long id){
+        var found = this.findById(id);
+        eventsRepository.delete(found);
+    }
 
 }
