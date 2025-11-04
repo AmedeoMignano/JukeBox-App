@@ -25,8 +25,8 @@ public class Request {
     @ManyToOne
     @JoinColumn(name = "song_id")
     private Song song;
-    @Column(name = "guest_id", nullable = false)
-    private String guestId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private GuestSession guest;
     @Column(name = "guest_name")
     private String guestName;
     private Status status = Status.PENDING;
