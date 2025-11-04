@@ -1,0 +1,51 @@
+package amedeo.mignano.jukebox_app.services;
+
+import amedeo.mignano.jukebox_app.entities.Request;
+import amedeo.mignano.jukebox_app.entities.Status;
+import amedeo.mignano.jukebox_app.exceptions.NotFoundException;
+import amedeo.mignano.jukebox_app.payloads.request.RequestCreateDTO;
+import amedeo.mignano.jukebox_app.payloads.request.RequestUpdateStatusDTO;
+import amedeo.mignano.jukebox_app.repositories.RequestsRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+@Slf4j
+public class RequestsService {
+    @Autowired
+    private RequestsRepository requestsRepository;
+    @Autowired
+    private SongsService songsService;
+    @Autowired
+    private GuestSessionsService guestSessionsService;
+
+    public Request findById(Long id){
+        return requestsRepository.findById(id).orElseThrow(() -> new NotFoundException("Richiesta non trovata"));
+    }
+    public Request createRequest(RequestCreateDTO payload){
+        var session = guestSessionsService.findById(payload.guestId());
+        var event = session.getEvent();
+        if(!event.isActive()) throw new IllegalArgumentException("Evento non attivo");
+        var song = songsService.findById(payload.songId());
+        if(!event.getRepertory().contains(song)) throw new IllegalArgumentException("Canzone non in repertorio");
+
+        Request request = new Request();
+        request.setGuest(session);
+        request.setSong(song);
+        request.setEvent(event);
+        request.setGuestName(payload.guestName());
+        request.setStatus(Status.PENDING);
+        var saved = requestsRepository.save(request);
+        log.info("Richiesta per il brano: " +  saved.getSong() + "inviata");
+        return saved;
+    }
+
+    public Request updateStatus(Long id, RequestUpdateStatusDTO payload){
+        Request found = this.findById(id);
+        found.setStatus(payload.status());
+        var updated = requestsRepository.save(found);
+        log.info("Stato richiesta per il brano " + updated.getSong());
+        return updated;
+    }
+}
