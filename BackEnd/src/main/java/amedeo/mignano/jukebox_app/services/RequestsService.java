@@ -32,7 +32,7 @@ public class RequestsService {
 
         boolean alreadyExist = requestsRepository.existByEventAndGuestAndSong(event,session,song);
         if(alreadyExist){
-            throw new IllegalArgumentException("Hai già richiesto questo brano");
+            throw new IllegalStateException("Hai già richiesto questo brano");
         }
         Request request = new Request();
         request.setGuest(session);

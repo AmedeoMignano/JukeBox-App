@@ -59,7 +59,7 @@ public class EventsService {
         LocalDateTime endOfToday = today.atTime(LocalTime.MAX);
         return eventsRepository.findByDateBetween(startOfToday,endOfToday);
     }
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 3 * * *")
     public void activateTodayEvent(){
         eventsRepository.findAll().forEach(event -> event.setActive(false));
         this.getTodayEvent().ifPresent(event -> event.setActive(true));
