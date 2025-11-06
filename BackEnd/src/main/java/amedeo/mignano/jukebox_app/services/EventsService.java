@@ -11,6 +11,7 @@ import amedeo.mignano.jukebox_app.payloads.event.EventUpdateBasicDTO;
 import amedeo.mignano.jukebox_app.payloads.event.EventUpdatePhaseDTO;
 import amedeo.mignano.jukebox_app.repositories.EventsRepository;
 import amedeo.mignano.jukebox_app.repositories.SongsRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -53,13 +54,12 @@ public class EventsService {
         return saved;
     }
 
-    public Optional<Event> getTodayEvent(){
+    public Optional<Event> getTodayEvent() {
         LocalDate today = LocalDate.now();
-        LocalDateTime startOfToday = today.atStartOfDay();
-        LocalDateTime endOfToday = today.atTime(LocalTime.MAX);
-        return eventsRepository.findByDateBetween(startOfToday,endOfToday);
+        return eventsRepository.findByDate(today);
     }
-    @Scheduled(cron = "0 0 3 * * *")
+    @Transactional
+    @Scheduled(cron = "0 0 3 * * *",  zone = "Europe/Rome")
     public void activateTodayEvent(){
         eventsRepository.findAll().forEach(event -> event.setActive(false));
         this.getTodayEvent().ifPresent(event -> event.setActive(true));
