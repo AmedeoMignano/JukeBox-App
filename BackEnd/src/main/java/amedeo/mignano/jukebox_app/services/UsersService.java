@@ -4,6 +4,7 @@ import amedeo.mignano.jukebox_app.entities.Role;
 import amedeo.mignano.jukebox_app.entities.User;
 import amedeo.mignano.jukebox_app.exceptions.BadRequestException;
 import amedeo.mignano.jukebox_app.exceptions.NotFoundException;
+import amedeo.mignano.jukebox_app.exceptions.UnauthorizedException;
 import amedeo.mignano.jukebox_app.payloads.user.UserDTO;
 import amedeo.mignano.jukebox_app.repositories.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class UsersService {
         return usersRepository.findById(id).orElseThrow(() -> new NotFoundException("Utente non trovato"));
     }
     public User findByEmail(String email){
-        return usersRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente non trovato"));
+        return usersRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Email non trovata"));
     }
     public User createUser(UserDTO payload){
         usersRepository.findByEmail(payload.email()).ifPresent(user -> {

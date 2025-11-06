@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RequestsRepository extends JpaRepository<Request, Long> {
-    boolean existByEventAndGuestAndSong(Event ev, GuestSession guest, Song song);
+    boolean existsByEventAndGuestAndSong(Event ev, GuestSession guest, Song song);
 }

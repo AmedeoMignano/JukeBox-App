@@ -9,6 +9,7 @@ import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 
@@ -44,16 +45,16 @@ public class ExceptionsHandler {
     public ErrorsDTO handleHttp(BadRequestException ex){
         return new ErrorsDTO("Inserisci formato valido per Stato", LocalDateTime.now());}
 
-    @ExceptionHandler(IllegalStateException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorsDTO handleIllegal(IllegalStateException ex){
-        return new ErrorsDTO("Errore nell'inserimento ruolo", LocalDateTime.now());
-    }
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsDTO handleInternal(Exception ex){
         ex.printStackTrace();
         return new ErrorsDTO("Errore Nel Server", LocalDateTime.now());
+    }
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorsDTO handleNoResource(NoResourceFoundException ex){
+        return new ErrorsDTO("Risorsa non trovata", LocalDateTime.now());
     }
 
 }

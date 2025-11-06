@@ -30,7 +30,7 @@ public class RequestsService {
         var song = songsService.findById(payload.songId());
         if(!event.getRepertory().contains(song)) throw new IllegalArgumentException("Canzone non in repertorio");
 
-        boolean alreadyExist = requestsRepository.existByEventAndGuestAndSong(event,session,song);
+        boolean alreadyExist = requestsRepository.existsByEventAndGuestAndSong(event,session,song);
         if(alreadyExist){
             throw new IllegalStateException("Hai già richiesto questo brano");
         }
