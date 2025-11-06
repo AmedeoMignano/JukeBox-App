@@ -35,6 +35,9 @@ public class SongsService {
         log.info("Brano " + saved.getTitle() + " salvata correttamente");
         return saved;
     }
+    public List<Song> findAll(){
+        return songsRepository.findAll();
+    }
     public Song findByIdAndUpdate(Long id, SongDTO payload){
         Song found = this.findById(id);
         found.setTitle(payload.title());

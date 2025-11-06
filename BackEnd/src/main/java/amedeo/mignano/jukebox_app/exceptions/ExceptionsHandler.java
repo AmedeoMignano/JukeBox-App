@@ -6,6 +6,7 @@ import amedeo.mignano.jukebox_app.payloads.error.ErrorsWithListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,6 +24,11 @@ public class ExceptionsHandler {
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorsDTO handleIllegalState(IllegalStateException ex){
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handleMethodNotSupported(HttpRequestMethodNotSupportedException ex){
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
     }
     @ExceptionHandler(NotValidException.class)
