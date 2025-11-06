@@ -15,7 +15,7 @@ public record EventCreateDTO(
         @FutureOrPresent(message = "La data dell'evento deve esssere nel presente o nel futuro")
         @NotNull(message = "Il campo data non può essere vuoto")
         LocalDate date,
-        @NotBlank(message = "Il campo per verificare se l'evento è attivo non può essere vuoto")
+        @NotNull(message = "Il campo per verificare se l'evento è attivo non può essere vuoto")
         boolean active,
         List<Long> songsId
 ) {

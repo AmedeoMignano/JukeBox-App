@@ -13,4 +13,5 @@ public interface EventsRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByAccessCode(String accessCode);
     Optional<Event> findByActiveTrue();
     Optional<Event> findByDateBetween(LocalDateTime start, LocalDateTime end);
+    Optional<Event> findByDate(LocalDate date);
 }

@@ -4,6 +4,7 @@ import amedeo.mignano.jukebox_app.entities.Event;
 import amedeo.mignano.jukebox_app.entities.Phase;
 import amedeo.mignano.jukebox_app.entities.Song;
 import amedeo.mignano.jukebox_app.entities.User;
+import amedeo.mignano.jukebox_app.exceptions.BadRequestException;
 import amedeo.mignano.jukebox_app.exceptions.NotFoundException;
 import amedeo.mignano.jukebox_app.payloads.event.EventCreateDTO;
 import amedeo.mignano.jukebox_app.payloads.event.EventRepertoryUpdateDTO;
@@ -33,6 +34,9 @@ public class EventsService {
     private SongsRepository songsRepository;
 
     public Event createEvent(EventCreateDTO payload, User authenticated){
+       eventsRepository.findByDate(payload.date()).ifPresent(event -> {
+            throw new BadRequestException("Non possono esserci più eventi per la stessa data");
+        });
         Event event = new Event();
         event.setName(payload.name());
         event.setLocation(payload.location());
@@ -51,6 +55,10 @@ public class EventsService {
         var saved = eventsRepository.save(event);
         log.info("Evento " + saved.getName() + " creato correttamente");
         return saved;
+    }
+
+    public List<Event> getAll(){
+        return eventsRepository.findAll();
     }
 
     public Optional<Event> getTodayEvent(){
@@ -73,6 +81,11 @@ public class EventsService {
     }
     public Event findByIdAndUpdateBasic(Long id, EventUpdateBasicDTO payload){
         Event found = this.findById(id);
+        if(!found.getDate().equals(payload.date())){
+            eventsRepository.findByDate(payload.date()).ifPresent(event -> {
+                throw new BadRequestException("Non possono esserci più eventi per la stessa data");
+            });
+        }
         found.setDate(payload.date());
         found.setName(payload.name());
         found.setLocation(payload.location());
