@@ -30,7 +30,7 @@ public class UsersService {
         usersRepository.findByEmail(payload.email()).ifPresent(user -> {
             throw new BadRequestException("Email " + payload.email() + " già in uso");
         });
-        usersRepository.findByUsername(payload.username()).ifPresent(utente -> {
+        usersRepository.findByUsername(payload.username()).ifPresent(user -> {
             throw new BadRequestException("Username " + payload.username() + " già in uso");
         });
         User user = new User();
