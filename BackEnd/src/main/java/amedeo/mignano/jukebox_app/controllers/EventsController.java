@@ -4,6 +4,7 @@ import amedeo.mignano.jukebox_app.entities.Event;
 import amedeo.mignano.jukebox_app.entities.User;
 import amedeo.mignano.jukebox_app.exceptions.NotValidException;
 import amedeo.mignano.jukebox_app.payloads.event.EventCreateDTO;
+import amedeo.mignano.jukebox_app.payloads.event.EventDTO;
 import amedeo.mignano.jukebox_app.payloads.event.EventRepertoryUpdateDTO;
 import amedeo.mignano.jukebox_app.payloads.event.EventUpdateBasicDTO;
 import amedeo.mignano.jukebox_app.services.EventsService;
@@ -71,5 +72,11 @@ public class EventsController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         eventsService.delete(id);
+    }
+
+    @GetMapping("/active")
+    public EventDTO getActiveEvent(){
+       Event ev = eventsService.findActive();
+       return EventDTO.fromEntity(ev);
     }
 }

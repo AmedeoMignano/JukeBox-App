@@ -129,4 +129,8 @@ public class EventsService {
         return eventsRepository.findAll();
     }
 
+    public Event findActive(){
+        return eventsRepository.findByActiveTrue().orElseThrow(() -> new NotFoundException("Evento non trovato"));
+    }
+
 }
