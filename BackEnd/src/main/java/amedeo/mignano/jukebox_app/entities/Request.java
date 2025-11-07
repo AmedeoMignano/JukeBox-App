@@ -32,7 +32,7 @@ public class Request {
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
     @Column(name = "request_datetime")
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
 }
