@@ -10,9 +10,14 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class WebSocketExceptionHandler {
 
+    @MessageExceptionHandler(IllegalArgumentException.class)
+    @SendToUser("/queue/errors")
+    public ErrorsDTO handleIllegalArgument(IllegalArgumentException ex){
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
     @MessageExceptionHandler(IllegalStateException.class)
     @SendToUser("/queue/errors")
-    public ErrorsDTO handleIllegal(IllegalStateException ex){
+    public ErrorsDTO handleIllegalState(IllegalStateException ex){
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
     }
     @MessageExceptionHandler(NotFoundException.class)
