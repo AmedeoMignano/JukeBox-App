@@ -1,5 +1,9 @@
 package amedeo.mignano.jukebox_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,12 +32,14 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private Phase currentPhase;
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
             name = "event_songs",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
     private List<Song> repertory = new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Request> requests = new ArrayList<>();
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)

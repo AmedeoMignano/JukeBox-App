@@ -1,5 +1,9 @@
 package amedeo.mignano.jukebox_app.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,6 +30,7 @@ public class Request {
     @JoinColumn(name = "song_id")
     private Song song;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private GuestSession guest;
     @Column(name = "guest_name")
     private String guestName;

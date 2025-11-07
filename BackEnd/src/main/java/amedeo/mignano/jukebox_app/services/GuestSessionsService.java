@@ -28,15 +28,12 @@ public class GuestSessionsService {
     public GuestSessionDTO checkEventAndCreateSession(){
         Event activeEvent = eventsRepository.findByActiveTrue().orElseThrow(() -> new NotFoundException("Evento non trovato"));
 
-        GuestSession session = guestSessionsRepository.findByEvent(activeEvent).orElseGet(() -> {
-            GuestSession newSession = new GuestSession();
-            newSession.setEvent(activeEvent);
-            newSession.setDateTime(LocalDateTime.now());
-            var saved = guestSessionsRepository.save(newSession);
-            log.info("Sessione salvata");
-            return saved;
-        });
-
+       GuestSession session = new GuestSession();
+       session.setEvent(activeEvent);
+       session.setDateTime(LocalDateTime.now());
+       var saved = guestSessionsRepository.save(session);
+       log.info("Nuova sessione creata");
+       
        return new GuestSessionDTO(
                session.getId().toString(),
                session.getEvent().getAccessCode(),
