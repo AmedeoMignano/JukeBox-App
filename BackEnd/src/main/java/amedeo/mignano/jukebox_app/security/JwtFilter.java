@@ -26,7 +26,8 @@ public class JwtFilter extends OncePerRequestFilter {
     private static final List<String> EXCLUDED_PATHS = Arrays.asList(
             "/auth/**",
             "/guest-session/**",
-            "/requests/**"
+            "/requests/**",
+            "/ws/**"
     );
     @Autowired
     private JwtTools jwtTools;

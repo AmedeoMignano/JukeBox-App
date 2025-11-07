@@ -32,7 +32,7 @@ public class RequestWebSocketController {
         var saved = requestsService.createRequest(body);
         simpMessagingTemplate.convertAndSend("topic/event" + saved.getEvent().getAccessCode() + "/requests", saved);
     }
-
+    @MessageMapping("/requests/update")
     public void handleUpdateStatus(RequestUpdateStatusDTO body){
         var updated = requestsService.updateStatus(body.id(), body);
         simpMessagingTemplate.convertAndSend("topic/event" + updated.getEvent().getAccessCode() + "/requests", updated);
