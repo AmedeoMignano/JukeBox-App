@@ -24,6 +24,7 @@ public class Request {
     @Column(name = "request_id")
     private Long id;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "event_id")
     private Event event;
     @ManyToOne

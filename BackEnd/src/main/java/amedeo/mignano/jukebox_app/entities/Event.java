@@ -42,6 +42,7 @@ public class Event {
     @JsonIgnore
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Request> requests = new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<GuestSession> guests = new ArrayList<>();
     @ManyToOne

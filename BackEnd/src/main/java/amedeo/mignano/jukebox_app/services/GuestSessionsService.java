@@ -33,7 +33,7 @@ public class GuestSessionsService {
        session.setDateTime(LocalDateTime.now());
        var saved = guestSessionsRepository.save(session);
        log.info("Nuova sessione creata");
-       
+
        return new GuestSessionDTO(
                session.getId().toString(),
                session.getEvent().getAccessCode(),
