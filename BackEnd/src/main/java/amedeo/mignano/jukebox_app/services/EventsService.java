@@ -124,5 +124,8 @@ public class EventsService {
         var found = this.findById(id);
         eventsRepository.delete(found);
     }
+    public List<Event> getAll(){
+        return eventsRepository.findAll();
+    }
 
 }
