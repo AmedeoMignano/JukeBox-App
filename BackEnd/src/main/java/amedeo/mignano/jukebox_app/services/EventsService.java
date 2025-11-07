@@ -100,6 +100,7 @@ public class EventsService {
         log.info("Evento " + saved.getId() + " aggiornato correttamente");
         return saved;
     }
+    @Transactional
     public Event updatePhase(Long id, EventUpdatePhaseDTO payload){
         Event found = this.findById(id);
         found.setCurrentPhase(payload.phase());

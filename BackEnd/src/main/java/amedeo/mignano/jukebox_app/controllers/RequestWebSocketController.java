@@ -22,16 +22,6 @@ public class RequestWebSocketController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    @PostConstruct
-    public void init() {
-        System.out.println("✅ RequestWebSocketController inizializzato");
-    }
-
-    @MessageMapping("/test")
-    public void test() {
-        System.out.println("📥 Ricevuto messaggio di test");
-        simpMessagingTemplate.convertAndSend("/topic/test", "Test dal server");
-    }
 
     @MessageMapping("/requests/create")
     public void HandleRequest(@Validated RequestCreateDTO body){

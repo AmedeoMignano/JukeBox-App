@@ -7,6 +7,7 @@ import amedeo.mignano.jukebox_app.exceptions.NotFoundException;
 import amedeo.mignano.jukebox_app.payloads.song.SongDTO;
 import amedeo.mignano.jukebox_app.repositories.EventsRepository;
 import amedeo.mignano.jukebox_app.repositories.SongsRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,7 @@ public class SongsService {
         log.info("Brano " + found.getTitle() + " aggiornato correttamente");
         return updated;
     }
+    @Transactional
     public List<Song> getAllSongForCurrentPhase(String accessCode){
         Event event = eventsRepository.findByAccessCode(accessCode)
                 .orElseThrow(() -> new NotFoundException("Evento non trovato"));
