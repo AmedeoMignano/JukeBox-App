@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @Slf4j
 public class RequestsService {
@@ -36,6 +38,12 @@ public class RequestsService {
         if(alreadyExist){
             throw new IllegalStateException("Hai già richiesto questo brano");
         }
+        var limitWindow = LocalDateTime.now().minusMinutes(10);
+        long recentRequests = requestsRepository.contRecentByGuest(session, limitWindow);
+        if(recentRequests >= 3){
+            throw new IllegalStateException("Non puoi fare più di 3 richieste ogni 10 minuti");
+        }
+
         Request request = new Request();
         request.setGuest(session);
         request.setSong(song);
