@@ -6,6 +6,7 @@ import amedeo.mignano.jukebox_app.exceptions.NotFoundException;
 import amedeo.mignano.jukebox_app.payloads.request.RequestCreateDTO;
 import amedeo.mignano.jukebox_app.payloads.request.RequestUpdateStatusDTO;
 import amedeo.mignano.jukebox_app.repositories.RequestsRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class RequestsService {
     public Request findById(Long id){
         return requestsRepository.findById(id).orElseThrow(() -> new NotFoundException("Richiesta non trovata"));
     }
+    @Transactional
     public Request createRequest(RequestCreateDTO payload){
         var session = guestSessionsService.findById(payload.guestId());
         var event = session.getEvent();

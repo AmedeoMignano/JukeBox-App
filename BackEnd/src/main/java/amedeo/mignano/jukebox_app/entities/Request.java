@@ -29,6 +29,7 @@ public class Request {
     private GuestSession guest;
     @Column(name = "guest_name")
     private String guestName;
+    @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
     @Column(name = "request_datetime")
     private LocalDateTime timestamp = LocalDateTime.now();

@@ -27,6 +27,7 @@ public class ExceptionsHandler {
     public ErrorsDTO handleBad(BadRequestException ex){
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
     }
+
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorsDTO handleIllegalState(IllegalStateException ex){
