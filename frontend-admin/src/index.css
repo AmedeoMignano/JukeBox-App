@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components {
+  .login-button {
+    @apply mt-8 w-full h-11 rounded-full text-white bg-red-800 hover:opacity-90 transition-opacity;
+  }
+}

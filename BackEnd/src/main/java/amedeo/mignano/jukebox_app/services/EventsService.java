@@ -130,7 +130,7 @@ public class EventsService {
     }
 
     public Event findActive(){
-        return eventsRepository.findByActiveTrue().orElseThrow(() -> new NotFoundException("Evento non trovato"));
+        return eventsRepository.findByActiveTrue().orElseThrow(() -> new NotFoundException("Nessun evento attivo disponibile"));
     }
 
 }
