@@ -2,6 +2,7 @@ package amedeo.mignano.jukebox_app.controllers;
 
 import amedeo.mignano.jukebox_app.payloads.event.EventUpdatePhaseDTO;
 import amedeo.mignano.jukebox_app.payloads.event.EventUpdatePhaseResponseDTO;
+import amedeo.mignano.jukebox_app.payloads.event.PhaseUpdateResponseDTO;
 import amedeo.mignano.jukebox_app.payloads.song.SongReqDTO;
 import amedeo.mignano.jukebox_app.services.EventsService;
 import amedeo.mignano.jukebox_app.services.SongsService;
@@ -30,6 +31,7 @@ public class EventsWebSocketController {
         System.out.println("Cambiando fase");
         List<SongReqDTO> songs = songsService.getAllSongForCurrentPhase(saved.getAccessCode()).
                 stream().map(SongReqDTO::fromEntity).toList();
-        simpMessagingTemplate.convertAndSend("/topic/event/" + saved.getAccessCode() + "/phase", songs);
+        PhaseUpdateResponseDTO payload = new PhaseUpdateResponseDTO(dto.phase(),songs);
+        simpMessagingTemplate.convertAndSend("/topic/event/" + saved.getAccessCode() + "/phase", payload);
     }
 }

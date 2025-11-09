@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import { isAuthenticated } from "./services/authservice";
 import { useEffect, useState } from "react";
 import Home from "./components/Home";
+import Navbar from "./components/Navbar";
 
 function ProtectedRoute({ element }) {
   return isAuthenticated() ? element : <Navigate to="/login" />;
@@ -23,7 +24,7 @@ function AppContent() {
 
   return (
     <>
-      {}
+      {isAuth && <Navbar />}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={isAuth ? <Home /> : <Login />} />
