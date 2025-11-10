@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:3001";
+import { API_URL } from "./APIservice";
 
 export const login = async (email, password) => {
   try {
