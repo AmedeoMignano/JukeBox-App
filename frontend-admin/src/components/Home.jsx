@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getActiveEvent } from "../services/eventservice";
 import Spinner from "./Spinner";
 import { connectWebSocket } from "../services/websocketservice";
+import RequestPanel from "./RequestPanel";
 
 const Home = () => {
   const [event, setEvent] = useState(null);
@@ -109,11 +110,8 @@ const Home = () => {
         </div>
         <div>
           <h1 className=" ps-3 mb-2 text-3xl">Richieste in arrivo</h1>
-          <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-2">
-            <h1 className="text-1xl text-red-700">
-              {event ? event.name : error}
-            </h1>
-          </div>
+
+          <RequestPanel access={accessCode} stomp={stompClient} />
         </div>
         <div>
           <h1 className=" ps-3 mb-2 text-3xl">Evento Attivo</h1>
