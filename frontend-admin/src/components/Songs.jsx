@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { deleteSong, getAllSongs } from "../services/songService";
 import Spinner from "./Spinner";
 import { Pencil, Trash } from "react-bootstrap-icons";
+import CreateSongModal from "./CreateSongModal";
+import UpdateSongModal from "./UpdateSongModal";
 
 const Songs = () => {
   const [songs, setSongs] = useState([]);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isCreateSongModalOpen, setCreateAddSongModalOpen] = useState(false);
+  const [songToEdit, setSongToEdit] = useState(null);
 
   const fetchSongs = async () => {
     try {
@@ -27,7 +31,7 @@ const Songs = () => {
       await deleteSong(id);
       await fetchSongs();
     } catch (err) {
-      console.log("CIAONE");
+      setError(err.message);
     }
   };
   useEffect(() => {
@@ -39,6 +43,13 @@ const Songs = () => {
       song.title.toLowerCase().includes(search.toLowerCase()) ||
       song.artist.toLowerCase().includes(search.toLowerCase())
   );
+  const handleEditSong = (song) => {
+    setSongToEdit(song);
+  };
+
+  const closeUpModal = () => {
+    setSongToEdit(null);
+  };
 
   if (isLoading)
     return (
@@ -57,7 +68,10 @@ const Songs = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="bg-red-700 text-white px-4 py-2 rounded-xl shadow hover:bg-red-800 cursor-pointer">
+        <button
+          className="bg-red-700 text-white px-4 py-2 rounded-xl shadow hover:bg-red-800 cursor-pointer"
+          onClick={() => setCreateAddSongModalOpen(true)}
+        >
           + Aggiungi
         </button>
       </div>
@@ -81,7 +95,10 @@ const Songs = () => {
                 >
                   Elimina <Trash className=" ms-2" />
                 </button>
-                <button className="flex items-center text-white bg-blue-600 rounded p-1 mt-2 cursor-pointer hover:bg-blue-700">
+                <button
+                  className="flex items-center text-white bg-blue-600 rounded p-1 mt-2 cursor-pointer hover:bg-blue-700"
+                  onClick={() => handleEditSong(song)}
+                >
                   Modifica <Pencil className=" ms-2" />
                 </button>
               </div>
@@ -89,6 +106,20 @@ const Songs = () => {
           ))}
         </ul>
       </div>
+      {isCreateSongModalOpen && (
+        <CreateSongModal
+          closeModal={() => setCreateAddSongModalOpen(false)}
+          onCreatedSong={fetchSongs}
+        />
+      )}
+
+      {songToEdit && (
+        <UpdateSongModal
+          closeModal={closeUpModal}
+          onSongUpdated={fetchSongs}
+          songToUpdate={songToEdit}
+        />
+      )}
     </div>
   );
 };

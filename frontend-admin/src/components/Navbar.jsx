@@ -30,7 +30,7 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/eventi"
+            location.pathname === "/events"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
           }
@@ -40,7 +40,7 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/canzoni"
+            location.pathname === "/songs"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
           }
@@ -104,7 +104,7 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/eventi"
+            location.pathname === "/events"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
           }
@@ -114,7 +114,7 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/canzoni"
+            location.pathname === "/songs"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
           }
@@ -124,7 +124,7 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/impostazioni"
+            location.pathname === "/settings"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
           }

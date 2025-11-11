@@ -20,7 +20,7 @@ const UpdateEventModal = ({ event, closeModal, onEventUpdated }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center p-4">
+    <div className="fixed inset-0 bg-gray-200 bg-opacity-40 flex justify-center items-center p-4">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-lg">
         <h2 className="text-2xl font-semibold text-center mb-4">
           Modifica Evento

@@ -18,6 +18,30 @@ export const deleteSong = async (id) => {
     });
     return response;
   } catch (err) {
-    err.response?.data || err.message;
+    throw err.response?.data || err.message;
+  }
+};
+export const createSong = async (payload) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/songs`,
+      payload,
+      getAuthHeader()
+    );
+    return response.data;
+  } catch (err) {
+    throw err.response?.data || err.message;
+  }
+};
+export const updateSong = async (id, payload) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/songs/${id}`,
+      payload,
+      getAuthHeader()
+    );
+    return response.data;
+  } catch (err) {
+    throw err.response?.data || err.message;
   }
 };
