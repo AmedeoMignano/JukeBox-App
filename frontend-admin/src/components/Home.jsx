@@ -72,7 +72,7 @@ const Home = () => {
   return (
     <div className="px-4 pt-7 h-screen bg-gray-100">
       {isloading && <Spinner />}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h1 className=" ps-3 mb-2 text-3xl">Evento Attivo</h1>
           <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-2">
@@ -113,14 +113,14 @@ const Home = () => {
 
           <RequestPanel access={accessCode} stomp={stompClient} />
         </div>
-        <div>
+        {/* <div>
           <h1 className=" ps-3 mb-2 text-3xl">Evento Attivo</h1>
           <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-2">
             <h1 className="text-1xl text-red-700">
               {event ? event.name : error}
             </h1>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div></div>

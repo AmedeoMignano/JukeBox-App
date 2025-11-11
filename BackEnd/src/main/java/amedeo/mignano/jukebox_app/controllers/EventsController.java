@@ -67,6 +67,15 @@ public class EventsController {
                                  @RequestBody EventRepertoryUpdateDTO body){
         return eventsService.updateRepertory(id,body);
     }
+    @PutMapping("/repertory/song/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public EventDTO addSongsToRepertory(@PathVariable Long id, @RequestBody EventAddSongsToRepertoryDTO body){
+        Event ev = eventsService.addSongToRepertory(id,body);
+        return EventDTO.fromEntity(ev);
+    }
+
+
+
     @DeleteMapping("{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)

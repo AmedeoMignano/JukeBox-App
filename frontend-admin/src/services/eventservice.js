@@ -86,3 +86,17 @@ export const deleteFromRepertory = async (id, songid) => {
     throw err.response?.data || err.message;
   }
 };
+
+export const addSongToRepertory = async (id, songsId) => {
+  try {
+    const payload = { songsId: songsId };
+    const response = await axios.put(
+      `${API_URL}/events/repertory/song/${id}`,
+      payload,
+      getAuthHeader()
+    );
+    return response;
+  } catch (err) {
+    throw err.response?.data || err.message;
+  }
+};

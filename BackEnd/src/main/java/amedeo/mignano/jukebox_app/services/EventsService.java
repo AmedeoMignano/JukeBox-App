@@ -21,7 +21,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -135,6 +137,30 @@ public class EventsService {
         } else {
           throw new BadRequestException("Impossibile eliminare canzone");
         }
+    }
+
+    @Transactional
+    public Event addSongToRepertory(Long id, EventAddSongsToRepertoryDTO payload){
+        Event found = this.findById(id);
+        if(payload.songsId() == null && !payload.songsId().isEmpty()){
+            throw new BadRequestException("Inserire Id Canzoni");
+        }
+        Set<Long> existingSongIds = found.getRepertory().stream()
+                .map(Song::getId)
+                .collect(Collectors.toSet());
+
+        Set<Long> newSongIdsToAdd = payload.songsId().stream()
+                .filter(songId -> !existingSongIds.contains(songId))
+                .collect(Collectors.toSet());
+
+        if (newSongIdsToAdd.isEmpty()) {
+           throw new BadRequestException("Brani già esistenti nel repertorio");
+        }
+        List<Song> newSongs = songsRepository.findAllById(newSongIdsToAdd);
+        found.getRepertory().addAll(newSongs);
+        var updated = eventsRepository.save(found);
+        log.info("Brani aggiunti al repertorio");
+        return updated;
     }
 
     public void delete(Long id){

@@ -8,6 +8,7 @@ import {
 import UpdateEventModal from "../components/UpdateEventModal";
 import Spinner from "./Spinner";
 import { Trash } from "react-bootstrap-icons";
+import AddSongsModal from "./AddSongsModal";
 
 const EventDetailPage = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const EventDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
+  const [isAddSongModalOpen, setIsAddSongModalOpen] = useState(false);
 
   const fetchEvent = async () => {
     try {
@@ -24,7 +26,8 @@ const EventDetailPage = () => {
       console.log(response);
       console.log(id);
     } catch (err) {
-      console.error("Errore nel caricamento evento:", err);
+      //   console.error("Errore nel caricamento evento:", err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -88,7 +91,8 @@ const EventDetailPage = () => {
         <Spinner />
       </div>
     );
-  if (!event) return <p className="text-center mt-10">Evento non trovato</p>;
+  if (!event)
+    return <p className="text-center mt-10 text-2xl text-red-700">{error}</p>;
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -115,19 +119,19 @@ const EventDetailPage = () => {
         <div className="flex gap-3 mt-5">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700"
+            className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 cursor-pointer"
           >
             Modifica Evento
           </button>
           <button
             onClick={handleDelete}
-            className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700"
+            className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 cursor-pointer"
           >
             Elimina
           </button>
           <button
             onClick={() => navigate("/events")}
-            className="bg-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400"
+            className="bg-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 cursor-pointer"
           >
             Indietro
           </button>
@@ -135,7 +139,24 @@ const EventDetailPage = () => {
       </div>
 
       <div className="bg-white rounded-2xl shadow-md p-6 max-w-3xl mx-auto">
-        <h2 className="text-2xl font-semibold text-red-700 mb-3">Repertorio</h2>
+        <div className=" w-full flex items-center justify-content-between mb-10">
+          <div className="me-auto">
+            <h2 className="text-2xl font-semibold text-red-700 mb-3 me-auto">
+              Repertorio
+            </h2>
+          </div>
+          <div>
+            <button
+              className="bg-red-700 text-white px-4 py-2 rounded-xl hover:bg-red-800 cursor-pointer"
+              onClick={() => {
+                setIsAddSongModalOpen(true);
+              }}
+            >
+              Aggiungi brano
+            </button>
+          </div>
+        </div>
+
         {event.repertory && event.repertory.length > 0 ? (
           <ul className="divide-y divide-gray-200">
             {event.repertory.map((song) => (
@@ -185,6 +206,15 @@ const EventDetailPage = () => {
           event={event}
           closeModal={() => setIsModalOpen(false)}
           onEventUpdated={fetchEvent}
+        />
+      )}
+
+      {isAddSongModalOpen && (
+        <AddSongsModal
+          eventId={id}
+          closeModal={() => setIsAddSongModalOpen(false)}
+          currentRepertory={event.repertory}
+          onUpdateRepertory={fetchEvent}
         />
       )}
     </div>

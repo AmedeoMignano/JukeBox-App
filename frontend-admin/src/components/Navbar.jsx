@@ -40,16 +40,6 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/richieste"
-              ? "text-red-700 hover:opacity-70 transition-opacity"
-              : "hover:opacity-70 transition-opacity"
-          }
-          to="/requests"
-        >
-          Richieste
-        </Link>
-        <Link
-          className={
             location.pathname === "/canzoni"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
@@ -121,16 +111,6 @@ const Navbar = () => {
           to="/events"
         >
           Eventi
-        </Link>
-        <Link
-          className={
-            location.pathname === "/richieste"
-              ? "text-red-700 hover:opacity-70 transition-opacity"
-              : "hover:opacity-70 transition-opacity"
-          }
-          to="/requests"
-        >
-          Richieste
         </Link>
         <Link
           className={
