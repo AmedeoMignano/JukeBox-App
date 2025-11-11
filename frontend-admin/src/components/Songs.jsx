@@ -57,6 +57,12 @@ const Songs = () => {
         <Spinner />
       </div>
     );
+  if (error)
+    return (
+      <div className="flex mt-10 justify-center">
+        <p className="text-red-700 text-center">{error}</p>
+      </div>
+    );
   return (
     <div className="p-10 min-h-screen bg-gray-100">
       <h1 className="text-center mb-5 text-2xl text-red-700">Lista Canzoni</h1>

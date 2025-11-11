@@ -50,13 +50,13 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/impostazioni"
+            location.pathname === "/register"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
           }
-          to="/settings"
+          to="/register"
         >
-          Impostazioni
+          Register
         </Link>
 
         <button
@@ -124,13 +124,13 @@ const Navbar = () => {
         </Link>
         <Link
           className={
-            location.pathname === "/settings"
+            location.pathname === "/register"
               ? "text-red-700 hover:opacity-70 transition-opacity"
               : "hover:opacity-70 transition-opacity"
           }
-          to="/settings"
+          to="/register"
         >
-          Impostazioni
+          Register
         </Link>
         <button
           className="cursor-pointer px-6 py-2 mt-2 bg-red-700 hover:bg-red-800 transition text-white rounded-full text-sm"

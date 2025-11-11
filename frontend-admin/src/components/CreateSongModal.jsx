@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createSong } from "../services/songService";
+import Alert from "./Alert";
 
 const CreateSongModal = ({ closeModal, onCreatedSong }) => {
   const [form, setForm] = useState({
@@ -16,8 +17,8 @@ const CreateSongModal = ({ closeModal, onCreatedSong }) => {
       closeModal();
       onCreatedSong();
     } catch (err) {
-      setError(err);
-      console.log(err);
+      setError(err.message);
+      console.log(err.message);
     }
   };
   return (
@@ -66,6 +67,11 @@ const CreateSongModal = ({ closeModal, onCreatedSong }) => {
           >
             Crea
           </button>
+          {error && (
+            <div className="flex justify-center">
+              <Alert errors={error} />
+            </div>
+          )}
         </div>
       </div>
     </div>
