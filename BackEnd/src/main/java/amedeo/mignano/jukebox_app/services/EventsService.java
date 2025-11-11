@@ -6,10 +6,7 @@ import amedeo.mignano.jukebox_app.entities.Song;
 import amedeo.mignano.jukebox_app.entities.User;
 import amedeo.mignano.jukebox_app.exceptions.BadRequestException;
 import amedeo.mignano.jukebox_app.exceptions.NotFoundException;
-import amedeo.mignano.jukebox_app.payloads.event.EventCreateDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventRepertoryUpdateDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventUpdateBasicDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventUpdatePhaseDTO;
+import amedeo.mignano.jukebox_app.payloads.event.*;
 import amedeo.mignano.jukebox_app.repositories.EventsRepository;
 import amedeo.mignano.jukebox_app.repositories.SongsRepository;
 import jakarta.transaction.Transactional;
@@ -24,7 +21,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -121,6 +120,49 @@ public class EventsService {
         return updated;
     }
 
+    @Transactional
+    public void deleteSongFromRepertory(Long id, EventDeleteSongFromRepertoryDTO payload){
+        Event found = this.findById(id);
+        if(payload.songId() == null){
+            throw new BadRequestException("Inserire Id canzone");
+        }
+
+        Song songToRemove = songsRepository.findById(payload.songId()).orElseThrow(
+                () -> new NotFoundException("canzone non trovata")
+        );
+        boolean removed = found.getRepertory().remove(songToRemove);
+
+        if (removed) {
+            eventsRepository.save(found);
+        } else {
+          throw new BadRequestException("Impossibile eliminare canzone");
+        }
+    }
+
+    @Transactional
+    public Event addSongToRepertory(Long id, EventAddSongsToRepertoryDTO payload){
+        Event found = this.findById(id);
+        if(payload.songsId() == null && !payload.songsId().isEmpty()){
+            throw new BadRequestException("Inserire Id Canzoni");
+        }
+        Set<Long> existingSongIds = found.getRepertory().stream()
+                .map(Song::getId)
+                .collect(Collectors.toSet());
+
+        Set<Long> newSongIdsToAdd = payload.songsId().stream()
+                .filter(songId -> !existingSongIds.contains(songId))
+                .collect(Collectors.toSet());
+
+        if (newSongIdsToAdd.isEmpty()) {
+           throw new BadRequestException("Brani già esistenti nel repertorio");
+        }
+        List<Song> newSongs = songsRepository.findAllById(newSongIdsToAdd);
+        found.getRepertory().addAll(newSongs);
+        var updated = eventsRepository.save(found);
+        log.info("Brani aggiunti al repertorio");
+        return updated;
+    }
+
     public void delete(Long id){
         var found = this.findById(id);
         eventsRepository.delete(found);
@@ -130,7 +172,7 @@ public class EventsService {
     }
 
     public Event findActive(){
-        return eventsRepository.findByActiveTrue().orElseThrow(() -> new NotFoundException("Evento non trovato"));
+        return eventsRepository.findByActiveTrue().orElseThrow(() -> new NotFoundException("Nessun evento attivo disponibile"));
     }
 
 }

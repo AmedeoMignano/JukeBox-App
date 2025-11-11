@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -39,8 +40,8 @@ public class RequestsService {
             throw new IllegalStateException("Hai già richiesto questo brano");
         }
         var limitWindow = LocalDateTime.now().minusMinutes(10);
-        long recentRequests = requestsRepository.contRecentByGuest(session, limitWindow);
-        if(recentRequests >= 3){
+        long recentRequests = requestsRepository.countRecentByGuest(session, limitWindow);
+        if(recentRequests > 3){
             throw new IllegalStateException("Non puoi fare più di 3 richieste ogni 10 minuti");
         }
 
@@ -61,5 +62,13 @@ public class RequestsService {
         var updated = requestsRepository.save(found);
         log.info("Stato richiesta per il brano " + updated.getSong());
         return updated;
+    }
+
+    public List<Request> getPendingByAccessCode(String accessCode){
+        List<Request> requests = requestsRepository.findAllByStatusAndEventAccessCode(Status.PENDING, accessCode);
+        if(requests.isEmpty()){
+            throw new NotFoundException("Non ci sono richieste in attesa per questo evento");
+        }
+        return requests;
     }
 }

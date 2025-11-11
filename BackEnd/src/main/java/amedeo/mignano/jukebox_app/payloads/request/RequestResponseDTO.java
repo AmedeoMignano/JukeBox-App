@@ -6,6 +6,7 @@ public record RequestResponseDTO(
         Long id,
         String guestName,
         String songTitle,
+        String artist,
         String eventCode,
         String status
 ) {
@@ -14,6 +15,7 @@ public record RequestResponseDTO(
                 req.getId(),
                 req.getGuestName(),
                 req.getSong().getTitle(),
+                req.getSong().getArtist(),
                 req.getEvent().getAccessCode(),
                 req.getStatus().name()
         );

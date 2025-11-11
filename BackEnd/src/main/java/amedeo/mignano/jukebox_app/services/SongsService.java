@@ -59,7 +59,13 @@ public class SongsService {
                 collect(Collectors.toList());
     }
     public void delete(Long id){
-        Song song = this.findById(id);
-        songsRepository.delete(song);
+        Song songToDelete = this.findById(id);
+        List<Event> eventsToUpdate = eventsRepository.findAllByRepertoryContains(songToDelete);
+        for(Event event : eventsToUpdate){
+            event.getRepertory().remove(songToDelete);
+            eventsRepository.save(event);
+        }
+        songsRepository.delete(songToDelete);
+        log.info("Canzone eliminata");
     }
 }
