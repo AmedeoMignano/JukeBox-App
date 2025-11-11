@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getEventById, deleteEvent } from "../services/eventservice";
+import {
+  getEventById,
+  deleteEvent,
+  deleteFromRepertory,
+} from "../services/eventservice";
 import UpdateEventModal from "../components/UpdateEventModal";
 import Spinner from "./Spinner";
 import { Trash } from "react-bootstrap-icons";
@@ -11,12 +15,14 @@ const EventDetailPage = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const fetchEvent = async () => {
     try {
       const response = await getEventById(id);
       setEvent(response);
       console.log(response);
+      console.log(id);
     } catch (err) {
       console.error("Errore nel caricamento evento:", err);
     } finally {
@@ -60,6 +66,19 @@ const EventDetailPage = () => {
       navigate("/events");
     } catch (err) {
       console.error("Errore eliminazione evento:", err);
+    }
+  };
+
+  const handleDeleteSong = async (songId, songTitle) => {
+    if (!window.confirm(`Sei sicuro di voler eliminare ${songTitle}?`)) return;
+
+    try {
+      await deleteFromRepertory(id, songId);
+      await fetchEvent();
+      console.log("Canzone eliminata con successo");
+    } catch (err) {
+      setError(err.response.data.message);
+      alert(err.response.data.message);
     }
   };
 
@@ -125,7 +144,10 @@ const EventDetailPage = () => {
                   {song.artist} -{" "}
                   <span className="text-red-700">{song.title}</span>
                 </p>
-                <button className="flex items-center text-white bg-red-700 rounded p-1 mt-2">
+                <button
+                  className="flex items-center text-white bg-red-700 rounded p-1 mt-2 cursor-pointer hover:bg-red-800"
+                  onClick={() => handleDeleteSong(song.id, song.title)}
+                >
                   Elimina <Trash className=" ms-2" />
                 </button>
               </li>

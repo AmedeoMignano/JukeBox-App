@@ -67,14 +67,15 @@ public class EventsController {
                                  @RequestBody EventRepertoryUpdateDTO body){
         return eventsService.updateRepertory(id,body);
     }
-    @DeleteMapping("/repertory/song/{id}")
+    @DeleteMapping("{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         eventsService.delete(id);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/repertory/song/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSongFromRepertory(@PathVariable Long id, @RequestBody EventDeleteSongFromRepertoryDTO body){
         eventsService.deleteSongFromRepertory(id,body);

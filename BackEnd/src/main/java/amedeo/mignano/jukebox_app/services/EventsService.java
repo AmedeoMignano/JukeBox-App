@@ -118,13 +118,23 @@ public class EventsService {
         return updated;
     }
 
+    @Transactional
     public void deleteSongFromRepertory(Long id, EventDeleteSongFromRepertoryDTO payload){
         Event found = this.findById(id);
-        if(payload.songId() != null){
-            found.getRepertory().remove(songsRepository.findById(payload.songId()));
+        if(payload.songId() == null){
+            throw new BadRequestException("Inserire Id canzone");
         }
-        var updated = (eventsRepository.save(found));
-        log.info("Brano Eliminato dal repertorio");
+
+        Song songToRemove = songsRepository.findById(payload.songId()).orElseThrow(
+                () -> new NotFoundException("canzone non trovata")
+        );
+        boolean removed = found.getRepertory().remove(songToRemove);
+
+        if (removed) {
+            eventsRepository.save(found);
+        } else {
+          throw new BadRequestException("Impossibile eliminare canzone");
+        }
     }
 
     public void delete(Long id){

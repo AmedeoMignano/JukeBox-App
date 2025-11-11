@@ -19,9 +19,9 @@ const Login = () => {
       await login(email, password);
       navigate("/");
     } catch (err) {
-      console.log(err);
-      console.log(err.message);
-      console.log(err.errorMessages[0].slice(10));
+      //   console.log(err);
+      //   console.log(err.message);
+      //   console.log(err.errorMessages[0].slice(10));
       if (err.errorMessages && err.errorMessages.length > 0) {
         setError(err.errorMessages[0].slice(10));
       } else if (err.message) {

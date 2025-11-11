@@ -72,3 +72,17 @@ export const deleteEvent = async (id) => {
     throw err.response?.data || err.message;
   }
 };
+
+export const deleteFromRepertory = async (id, songid) => {
+  try {
+    const payload = { songId: songid };
+
+    const response = axios.delete(`${API_URL}/events/repertory/song/${id}`, {
+      data: payload,
+      ...getAuthHeader(),
+    });
+    return response;
+  } catch (err) {
+    throw err.response?.data || err.message;
+  }
+};
