@@ -12,6 +12,7 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Event from "./components/Event";
 import EventDetailPage from "./components/EventDetailPage";
+import Songs from "./components/Songs";
 
 function ProtectedRoute({ element }) {
   return isAuthenticated() ? element : <Navigate to="/login" />;
@@ -38,6 +39,7 @@ function AppContent() {
           path="/events/:id"
           element={<ProtectedRoute element={<EventDetailPage />} />}
         />
+        <Route path="/songs" element={<ProtectedRoute element={<Songs />} />} />
       </Routes>
     </>
   );

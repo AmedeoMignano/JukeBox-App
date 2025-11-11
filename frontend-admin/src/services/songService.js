@@ -9,3 +9,15 @@ export const getAllSongs = async () => {
     throw err.response?.data || err.message;
   }
 };
+export const deleteSong = async (id) => {
+  try {
+    const payload = { songId: id };
+    const response = await axios.delete(`${API_URL}/songs/${id}`, {
+      payload,
+      ...getAuthHeader(),
+    });
+    return response;
+  } catch (err) {
+    err.response?.data || err.message;
+  }
+};
