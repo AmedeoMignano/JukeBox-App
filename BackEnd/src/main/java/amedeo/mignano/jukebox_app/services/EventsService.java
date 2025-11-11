@@ -6,10 +6,7 @@ import amedeo.mignano.jukebox_app.entities.Song;
 import amedeo.mignano.jukebox_app.entities.User;
 import amedeo.mignano.jukebox_app.exceptions.BadRequestException;
 import amedeo.mignano.jukebox_app.exceptions.NotFoundException;
-import amedeo.mignano.jukebox_app.payloads.event.EventCreateDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventRepertoryUpdateDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventUpdateBasicDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventUpdatePhaseDTO;
+import amedeo.mignano.jukebox_app.payloads.event.*;
 import amedeo.mignano.jukebox_app.repositories.EventsRepository;
 import amedeo.mignano.jukebox_app.repositories.SongsRepository;
 import jakarta.transaction.Transactional;
@@ -119,6 +116,15 @@ public class EventsService {
         var updated = eventsRepository.save(found);
         log.info("Repertorio aggiornato");
         return updated;
+    }
+
+    public void deleteSongFromRepertory(Long id, EventDeleteSongFromRepertoryDTO payload){
+        Event found = this.findById(id);
+        if(payload.songId() != null){
+            found.getRepertory().remove(songsRepository.findById(payload.songId()));
+        }
+        var updated = (eventsRepository.save(found));
+        log.info("Brano Eliminato dal repertorio");
     }
 
     public void delete(Long id){

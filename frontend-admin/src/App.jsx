@@ -10,6 +10,8 @@ import { isAuthenticated } from "./services/authservice";
 import { useEffect, useState } from "react";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
+import Event from "./components/Event";
+import EventDetailPage from "./components/EventDetailPage";
 
 function ProtectedRoute({ element }) {
   return isAuthenticated() ? element : <Navigate to="/login" />;
@@ -28,6 +30,14 @@ function AppContent() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={isAuth ? <Home /> : <Login />} />
+        <Route
+          path="/events"
+          element={<ProtectedRoute element={<Event />} />}
+        />
+        <Route
+          path="/events/:id"
+          element={<ProtectedRoute element={<EventDetailPage />} />}
+        />
       </Routes>
     </>
   );

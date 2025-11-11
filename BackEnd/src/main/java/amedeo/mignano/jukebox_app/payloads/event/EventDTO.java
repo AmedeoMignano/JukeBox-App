@@ -1,12 +1,10 @@
 package amedeo.mignano.jukebox_app.payloads.event;
 
-import amedeo.mignano.jukebox_app.entities.Event;
-import amedeo.mignano.jukebox_app.entities.GuestSession;
-import amedeo.mignano.jukebox_app.entities.Phase;
-import amedeo.mignano.jukebox_app.entities.Request;
+import amedeo.mignano.jukebox_app.entities.*;
 import amedeo.mignano.jukebox_app.payloads.guestsession.GuestSessionDTO;
 import amedeo.mignano.jukebox_app.payloads.request.RequestResponseDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record EventDTO(
@@ -16,7 +14,10 @@ public record EventDTO(
         String location,
         Phase phase,
         List<RequestResponseDTO> requests,
-        List<GuestSessionDTO> guests
+        List<GuestSessionDTO> guests,
+        List<Song> repertory,
+        boolean active,
+        LocalDate date
 ) {
     public static EventDTO fromEntity(Event ev){
         return new EventDTO(
@@ -30,7 +31,10 @@ public record EventDTO(
                         : List.of(),
                 ev.getGuests() != null ?
                         ev.getGuests().stream().map(GuestSessionDTO::fromEntity).toList()
-                        : List.of()
+                        : List.of(),
+                ev.getRepertory(),
+                ev.isActive(),
+                ev.getDate()
 
         );
     }

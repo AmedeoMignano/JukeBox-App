@@ -48,4 +48,5 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
+
 }

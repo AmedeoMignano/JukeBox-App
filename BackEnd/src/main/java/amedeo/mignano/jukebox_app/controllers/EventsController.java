@@ -3,10 +3,7 @@ package amedeo.mignano.jukebox_app.controllers;
 import amedeo.mignano.jukebox_app.entities.Event;
 import amedeo.mignano.jukebox_app.entities.User;
 import amedeo.mignano.jukebox_app.exceptions.NotValidException;
-import amedeo.mignano.jukebox_app.payloads.event.EventCreateDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventRepertoryUpdateDTO;
-import amedeo.mignano.jukebox_app.payloads.event.EventUpdateBasicDTO;
+import amedeo.mignano.jukebox_app.payloads.event.*;
 import amedeo.mignano.jukebox_app.services.EventsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,14 +37,16 @@ public class EventsController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Event> getAllEvents(){
-        return eventsService.getAll();
+    public List<EventsDTO> getAllEvents(){
+        return eventsService.getAll().stream().
+                map(EventsDTO::fromEntity).toList();
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Event getSingle(@PathVariable Long id){
-        return eventsService.findById(id);
+    public EventDTO getSingle(@PathVariable Long id){
+        Event ev = eventsService.findById(id);
+        return EventDTO.fromEntity(ev);
     }
 
     @PutMapping("{id}")
@@ -68,12 +67,18 @@ public class EventsController {
                                  @RequestBody EventRepertoryUpdateDTO body){
         return eventsService.updateRepertory(id,body);
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping("/repertory/song/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         eventsService.delete(id);
     }
 
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSongFromRepertory(@PathVariable Long id, @RequestBody EventDeleteSongFromRepertoryDTO body){
+        eventsService.deleteSongFromRepertory(id,body);
+    }
     @GetMapping("/active")
     public EventDTO getActiveEvent(){
        Event ev = eventsService.findActive();

@@ -1,9 +1,10 @@
 import React from "react";
 import { logout } from "../services/authservice";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = React.useState(false);
   const handlelogOut = () => {
     logout();
@@ -17,9 +18,56 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-8">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <Link
+          className={
+            location.pathname === "/"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/"
+        >
+          Home
+        </Link>
+        <Link
+          className={
+            location.pathname === "/eventi"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/events"
+        >
+          Eventi
+        </Link>
+        <Link
+          className={
+            location.pathname === "/richieste"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/requests"
+        >
+          Richieste
+        </Link>
+        <Link
+          className={
+            location.pathname === "/canzoni"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/songs"
+        >
+          Canzoni
+        </Link>
+        <Link
+          className={
+            location.pathname === "/impostazioni"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/settings"
+        >
+          Impostazioni
+        </Link>
 
         <button
           className="cursor-pointer px-8 py-2 bg-red-700 hover:bg-red-800 transition text-white rounded-full"
@@ -52,17 +100,58 @@ const Navbar = () => {
       <div
         className={`${
           open ? "flex" : "hidden"
-        } absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
+        } absolute top-[80px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
       >
-        <a href="#" className="block">
+        <Link
+          className={
+            location.pathname === "/"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/"
+        >
           Home
-        </a>
-        <a href="#" className="block">
-          About
-        </a>
-        <a href="#" className="block">
-          Contact
-        </a>
+        </Link>
+        <Link
+          className={
+            location.pathname === "/eventi"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/events"
+        >
+          Eventi
+        </Link>
+        <Link
+          className={
+            location.pathname === "/richieste"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/requests"
+        >
+          Richieste
+        </Link>
+        <Link
+          className={
+            location.pathname === "/canzoni"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/songs"
+        >
+          Canzoni
+        </Link>
+        <Link
+          className={
+            location.pathname === "/impostazioni"
+              ? "text-red-700 hover:opacity-70 transition-opacity"
+              : "hover:opacity-70 transition-opacity"
+          }
+          to="/settings"
+        >
+          Impostazioni
+        </Link>
         <button
           className="cursor-pointer px-6 py-2 mt-2 bg-red-700 hover:bg-red-800 transition text-white rounded-full text-sm"
           onClick={handlelogOut}
