@@ -18,6 +18,7 @@ const GuestEvent = () => {
   const [search, setSearch] = useState("");
   const guestParsed = JSON.parse(guestSession);
   const [requestStatus, setRequestStatus] = useState("");
+  const [eventName, setEventName] = useState("");
 
   const initWebSocket = () => {
     connectWebSocket((stomp) => {
@@ -33,6 +34,7 @@ const GuestEvent = () => {
       //   console.log(guestName);
       //   console.log(guestParsed);
       setEvent(response);
+      setEventName(response.name);
       setPhase(response.phase);
       setSongs(response.repertory || []);
       initWebSocket();
@@ -114,13 +116,26 @@ const GuestEvent = () => {
 
   return (
     <div>
+      <div className="bg-red-100 text-center py-5">
+        <h1 className="font-medium text-3xl">
+          Benvenuto, <span className="text-red-700">{guestName}</span>
+        </h1>
+        <p className="text-2xl">
+          grazie per essere presente per l'evento:{" "}
+          <span className="text-red-700">{eventName}</span>
+        </p>
+        <p className="text-2xl mt-3">
+          Questo è <span className="text-red-700">Banda-Corta-Jukebox</span> ,
+          scegli un brano dal nostro jukebox e noi lo eseguiremo per te
+        </p>
+      </div>
       <div class="flex min-h-screen justify-center home-bg p-4">
         <div class="relative w-full max-w-2xl">
           {/* <!-- Top arrotondato (contenitore esterno) --> */}
           <div class="neon-border-top relative mt-10 h-80 overflow-hidden rounded-t-full border-8 border-white bg-yellow-900 shadow-2xl">
             {/* <!-- Specchio/Display centrale con bordi --> */}
             <div class="absolute inset-8 flex flex-col items-center justify-center rounded-t-full border-4 border-yellow-800 bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 shadow-inner">
-              <h1 class="text-center text-2xl sm:text-3xl font-bold text-white drop-shadow-l mt-5">
+              <h1 class="text-center text-[20px] sm:text-3xl font-bold text-white drop-shadow-l mt-5">
                 Banda Corta Jukebox
               </h1>
               <p className="font-medium text-1xl text-white">
