@@ -63,6 +63,21 @@ const Home = () => {
     setTimeout(() => setIsChanging(false), 2000);
   };
 
+  useEffect(() => {
+    if (!stompClient || !accessCode) return;
+    const sub = stompClient.subscribe(
+      `/topic/event/${accessCode}/requests`,
+      (msg) => {
+        const newReq = JSON.parse(msg.body);
+        setEvent((prev) => ({
+          ...prev,
+          requests: [newReq, ...(prev?.requests || [])],
+        }));
+      }
+    );
+    return () => sub.unsubscribe();
+  }, [stompClient, accessCode]);
+
   const initWebSocket = () => {
     connectWebSocket((stomp) => {
       setStompClient(stomp);
