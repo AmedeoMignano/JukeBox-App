@@ -129,13 +129,13 @@ const GuestEvent = () => {
           scegli un brano dal nostro jukebox e noi lo eseguiremo per te
         </p>
       </div>
-      <div class="flex min-h-screen justify-center home-bg p-4">
-        <div class="relative w-full max-w-2xl">
+      <div className="flex min-h-screen justify-center home-bg p-4">
+        <div className="relative w-full max-w-2xl">
           {/* <!-- Top arrotondato (contenitore esterno) --> */}
-          <div class="neon-border-top relative mt-10 h-80 overflow-hidden rounded-t-full border-8 border-white bg-yellow-900 shadow-2xl">
+          <div className="neon-border-top relative mt-10 h-80 overflow-hidden rounded-t-full border-8 border-white bg-yellow-900 shadow-2xl">
             {/* <!-- Specchio/Display centrale con bordi --> */}
-            <div class="absolute inset-8 flex flex-col items-center justify-center rounded-t-full border-4 border-yellow-800 bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 shadow-inner">
-              <h1 class="text-center text-[20px] sm:text-3xl font-bold text-white drop-shadow-l mt-5">
+            <div className="absolute inset-8 flex flex-col items-center justify-center rounded-t-full border-4 border-yellow-800 bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 shadow-inner">
+              <h1 className="text-center text-[20px] sm:text-3xl font-bold text-white drop-shadow-l mt-5">
                 Banda Corta Jukebox
               </h1>
               <p className="font-medium text-1xl text-white">
@@ -152,7 +152,7 @@ const GuestEvent = () => {
           </div>
 
           {/* <!-- Telaio per la lista --> */}
-          <div class="neon-border-bottom relative rounded-b-3xl border-8 border-white bg-yellow-900 p-6 shadow-2xl">
+          <div className="neon-border-bottom relative rounded-b-3xl border-8 border-white bg-yellow-900 p-6 shadow-2xl">
             {/* <!-- Contenitore lista --> */}
             <div className="bg-opacity-60 max-h-96 overflow-y-auto rounded-lg border-4 border-yellow-600 bg-black p-4">
               {/* <!-- Lista canzoni --> */}
@@ -166,16 +166,20 @@ const GuestEvent = () => {
                   {requestStatus}
                 </p>
               )}
-              <ul class="space-y-3">
-                {filteredSongs.map((song) => (
+              <ul className="space-y-3">
+                {filteredSongs.map((song, index) => (
                   <li
-                    key={song.id}
-                    class="bg-opacity-30 hover:bg-opacity-40 rounded bg-yellow-100 p-4 transition-all hover:bg-yellow-500"
+                    key={`${song.id}-${index}`}
+                    className="bg-opacity-30 hover:bg-opacity-40 rounded bg-yellow-100 p-4 transition-all hover:bg-yellow-500"
                   >
-                    <div class="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
                       <div>
-                        <div class="font-semibold text-black">{song.title}</div>
-                        <div class="text-sm text-red-600">{song.artist}</div>
+                        <div className="font-semibold text-black">
+                          {song.title}
+                        </div>
+                        <div className="text-sm text-red-600">
+                          {song.artist}
+                        </div>
                       </div>
                       <div className="text-center">
                         <button
