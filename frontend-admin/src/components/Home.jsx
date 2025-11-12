@@ -131,8 +131,10 @@ const Home = () => {
               stomp={stompClient}
             />
           ) : (
-            <div className="flex justify-center">
-              <Spinner />
+            <div className="text-center bg-white rounded-2xl shadow-md p-4">
+              <p className="text-gray-600">
+                {error || "Nessuna richiesta al momento"}
+              </p>
             </div>
           )}
         </div>
