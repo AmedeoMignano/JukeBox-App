@@ -29,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
             "/requests/**",
             "/ws/**",
             "/events/active",
+            "/events/event/**",
             "/requests/pending/**"
     );
     @Autowired

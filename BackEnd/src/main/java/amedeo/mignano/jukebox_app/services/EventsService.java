@@ -174,5 +174,8 @@ public class EventsService {
     public Event findActive(){
         return eventsRepository.findByActiveTrue().orElseThrow(() -> new NotFoundException("Nessun evento attivo disponibile"));
     }
+    public Event findByAccessCode(String accessCode){
+        return eventsRepository.findByAccessCode(accessCode).orElseThrow(() -> new NotFoundException("Evento non trovato"));
+    }
 
 }

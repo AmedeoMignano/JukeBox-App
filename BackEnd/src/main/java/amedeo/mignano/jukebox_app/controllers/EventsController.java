@@ -94,4 +94,9 @@ public class EventsController {
        Event ev = eventsService.findActive();
        return EventDTO.fromEntity(ev);
     }
+    @GetMapping("/event/{accessCode}")
+    public EventDTO getActiveEventByAccessCode(@PathVariable String accessCode){
+        Event ev = eventsService.findByAccessCode(accessCode);
+        return EventDTO.fromEntity(ev);
+    }
 }
