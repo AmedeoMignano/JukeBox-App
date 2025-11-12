@@ -3,7 +3,7 @@ package amedeo.mignano.jukebox_app.payloads.song;
 import amedeo.mignano.jukebox_app.entities.Song;
 
 public record SongReqDTO(
-        Long songId,
+        Long id,
         String title,
         String artist
 ) {

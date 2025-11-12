@@ -69,6 +69,7 @@ const Home = () => {
       `/topic/event/${accessCode}/requests`,
       (msg) => {
         const newReq = JSON.parse(msg.body);
+        console.log(newReq);
         setEvent((prev) => ({
           ...prev,
           requests: [newReq, ...(prev?.requests || [])],

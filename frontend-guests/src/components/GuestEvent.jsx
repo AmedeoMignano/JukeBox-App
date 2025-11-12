@@ -99,6 +99,11 @@ const GuestEvent = () => {
   const sendRequest = (songId) => {
     if (!stompClient || !accessCode) return;
 
+    if (!songId) {
+      setError("Errore: ID del brano non valido.");
+      return;
+    }
+
     const payload = {
       guestId: guestParsed.id,
       songId: songId,
