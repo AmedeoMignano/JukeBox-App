@@ -17,7 +17,7 @@ const GuestHome = () => {
     try {
       setIsLoading(true);
       const response = await createGuestSession();
-      console.log(response);
+      //   console.log(response);
       console.log(response.accessCode);
       const { accessCode } = response;
 
@@ -26,8 +26,8 @@ const GuestHome = () => {
 
       navigate(`/guest/event/${accessCode}`, { replace: true });
     } catch (err) {
-      console.log(err);
-      setError(err);
+      //   console.log(err);
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }

@@ -12,26 +12,24 @@ const Home = () => {
   const [accessCode, setAccessCode] = useState("");
   const [currentPhase, setCurrentPhase] = useState("");
   const [isChanging, setIsChanging] = useState(false);
-
-  const loadActiveEvent = async () => {
-    setError("");
-    setIsloading(true);
-    try {
-      const result = await getActiveEvent();
-      console.log(result);
-      setEvent(result || []);
-      setCurrentPhase(result.phase);
-      setAccessCode(result.accessCode);
-      initWebSocket();
-    } catch (err) {
-      console.log(err);
-      setError(err.message);
-    } finally {
-      setIsloading(false);
-    }
-  };
-
   useEffect(() => {
+    const loadActiveEvent = async () => {
+      setError("");
+      setIsloading(true);
+      try {
+        const result = await getActiveEvent();
+        // console.log(result);
+        setEvent(result || []);
+        setCurrentPhase(result.phase);
+        setAccessCode(result.accessCode);
+      } catch (err) {
+        console.log(err);
+        setError(err.message);
+      } finally {
+        setIsloading(false);
+      }
+    };
+
     loadActiveEvent();
   }, []);
 
@@ -69,6 +67,7 @@ const Home = () => {
       `/topic/event/${accessCode}/requests`,
       (msg) => {
         const newReq = JSON.parse(msg.body);
+        // console.log(newReq);
         setEvent((prev) => ({
           ...prev,
           requests: [newReq, ...(prev?.requests || [])],
@@ -78,11 +77,10 @@ const Home = () => {
     return () => sub.unsubscribe();
   }, [stompClient, accessCode]);
 
-  const initWebSocket = () => {
-    connectWebSocket((stomp) => {
-      setStompClient(stomp);
-    });
-  };
+  useEffect(() => {
+    if (!accessCode || stompClient) return;
+    connectWebSocket((stomp) => setStompClient(stomp));
+  }, [accessCode]);
 
   return (
     <div className="px-4 pt-7 h-screen bg-gray-100">
@@ -126,7 +124,19 @@ const Home = () => {
         <div>
           <h1 className=" ps-3 mb-2 text-3xl">Richieste in arrivo</h1>
 
-          <RequestPanel access={accessCode} stomp={stompClient} />
+          {stompClient && accessCode ? (
+            <RequestPanel
+              key={accessCode}
+              access={accessCode}
+              stomp={stompClient}
+            />
+          ) : (
+            <div className="text-center bg-white rounded-2xl shadow-md p-4">
+              <p className="text-gray-600">
+                {error || "Nessuna richiesta al momento"}
+              </p>
+            </div>
+          )}
         </div>
         {/* <div>
           <h1 className=" ps-3 mb-2 text-3xl">Evento Attivo</h1>
