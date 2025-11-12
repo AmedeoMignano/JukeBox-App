@@ -54,6 +54,11 @@ const GuestHome = () => {
             {isLoading ? <Spinner /> : "Entra nell'evento"}
           </button>
         </form>
+        {error && (
+          <div className="mt-3">
+            <p className="text-red-500">{error}</p>
+          </div>
+        )}
       </div>
     </div>
   );
