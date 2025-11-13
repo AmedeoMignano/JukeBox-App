@@ -16,6 +16,10 @@
   .home-button {
     @apply rounded-xl bg-red-700 py-2 mt-3 text-white hover:bg-red-800 disabled:bg-gray-400;
   }
+
+  .nav-bar {
+    @apply flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-2 border-b border-gray-300 bg-white relative transition-all;
+  }
 }
 
 @keyframes neon-glow {

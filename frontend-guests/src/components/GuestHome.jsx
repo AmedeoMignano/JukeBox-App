@@ -18,7 +18,7 @@ const GuestHome = () => {
       setIsLoading(true);
       const response = await createGuestSession();
       //   console.log(response);
-      console.log(response.accessCode);
+      // console.log(response.accessCode);
       const { accessCode } = response;
 
       localStorage.setItem("guestName", guestName);
