@@ -17,8 +17,11 @@ const GuestEvent = () => {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const guestParsed = JSON.parse(guestSession);
+  const guestId = guestParsed.id;
   const [requestStatus, setRequestStatus] = useState("");
   const [eventName, setEventName] = useState("");
+  const [responseStatus, setResponseStatus] = useState("");
+  const [responseSongName, setResponseSongName] = useState("");
 
   const initWebSocket = () => {
     connectWebSocket((stomp) => {
@@ -126,6 +129,26 @@ const GuestEvent = () => {
       setError(err);
     }
   };
+
+  useEffect(() => {
+    if (!stompClient || !accessCode || !guestId) return;
+    const subscription = stompClient.subscribe(
+      `/topic/event/${accessCode}/requests/${guestId}`,
+      (msg) => {
+        const data = JSON.parse(msg.body);
+        // console.log(data);
+        setResponseSongName(data.songName);
+        if (data.status === "REJECTED") {
+          setResponseStatus("RESPINTA");
+        } else {
+          setResponseStatus("ACCETTATA");
+        }
+      }
+    );
+    // console.log(responseSongName);
+    // console.log(responseStatus);
+    return () => subscription.unsubscribe();
+  }, [stompClient, accessCode, guestId]);
 
   return (
     <div>

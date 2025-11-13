@@ -35,6 +35,10 @@ public class RequestWebSocketController {
     public void handleUpdateStatus(RequestUpdateStatusDTO body){
         var updated = requestsService.updateStatus(body.id(), body);
         var dto = RequestUpdateStatusResponseDTO.fromEntity(updated);
+        // punto di accesso generico
         simpMessagingTemplate.convertAndSend("/topic/event/" + updated.getEvent().getAccessCode() + "/requests", dto);
+        // Creo un punto di accesso specifico per l'user che ha fatto la richiesta
+        System.out.println("inviando risposta");
+        simpMessagingTemplate.convertAndSend("/topic/event/" + updated.getEvent().getAccessCode() + "/requests/" + updated.getGuest().getId(), dto);
     }
 }
