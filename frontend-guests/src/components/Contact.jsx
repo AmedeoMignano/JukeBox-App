@@ -41,7 +41,7 @@ const Contact = () => {
 
       <div className="contact-social-photo bg-[url(/src/assets/img/Contact.jpg)] bg-no-repeat bg-cover bg-center"></div>
 
-      <div className="mt-6 flex justify-around mb-5">
+      <div className="mt-6 flex justify-around mb-20">
         <div className="rounded-2xl overflow-hidden">
           <a
             href="https://www.matrimonio.com/musica-matrimonio/banda-corta--e219427"
