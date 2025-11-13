@@ -30,7 +30,7 @@ const GuestEvent = () => {
     setIsLoading(true);
     try {
       const response = await getEventByAccessCode(accessCode);
-      console.log(response);
+      // console.log(response);
       //   console.log(guestName);
       //   console.log(guestParsed);
       const currentPhase = response.phase;
