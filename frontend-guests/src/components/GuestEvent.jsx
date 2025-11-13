@@ -30,13 +30,21 @@ const GuestEvent = () => {
     setIsLoading(true);
     try {
       const response = await getEventByAccessCode(accessCode);
-      //   console.log(response);
+      console.log(response);
       //   console.log(guestName);
       //   console.log(guestParsed);
+      const currentPhase = response.phase;
+      // console.log(currentPhase);
+
+      const filteredSongs = response.repertory
+        ? response.repertory.filter((song) => song.category === currentPhase)
+        : [];
+
+      // console.log(filteredSongs);
       setEvent(response);
       setEventName(response.name);
-      setPhase(response.phase);
-      setSongs(response.repertory || []);
+      setPhase(currentPhase);
+      setSongs(filteredSongs);
       initWebSocket();
     } catch (err) {
       console.log(err);
