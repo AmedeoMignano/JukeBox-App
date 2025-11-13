@@ -67,11 +67,37 @@ const Home = () => {
       `/topic/event/${accessCode}/requests`,
       (msg) => {
         const newReq = JSON.parse(msg.body);
-        // console.log(newReq);
-        setEvent((prev) => ({
-          ...prev,
-          requests: [newReq, ...(prev?.requests || [])],
-        }));
+        console.log(newReq);
+
+        // controllo se la richiesta ha stato diverso da PENDING non aggiorno
+        // così il counter non aumenta anche se accetto o respingo la richiesta
+        if (newReq.status !== "PENDING") {
+          return;
+        }
+        setEvent((prev) => {
+          const existingIndex = prev?.requests?.findIndex((r) => {
+            // console.log("existing:", r.id);
+            // console.log("nuova richiesta:" + newReq.id);
+            r.id === newReq.id;
+          });
+          console.log(existingIndex);
+
+          if (existingIndex !== -1) {
+            // Richiesta esistente l'aggiorno
+            const updatedRequests = [...(prev?.requests || [])];
+            updatedRequests[existingIndex] = newReq;
+            return {
+              ...prev,
+              requests: updatedRequests,
+            };
+          } else {
+            // Nuova richiesta l'aggiungo
+            return {
+              ...prev,
+              requests: [newReq, ...(prev?.requests || [])],
+            };
+          }
+        });
       }
     );
     return () => sub.unsubscribe();
