@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connectWebSocket } from "../services/websocketservice";
 import { getEventByAccessCode } from "../services/eventservice";
+import toast from "react-hot-toast";
+import Spinner from "./Spinner";
+import { useWebSocket } from "../context/WebSocketContext";
 
 const GuestEvent = () => {
   const { accessCode } = useParams();
-  const [stompClient, setStompClient] = useState(null);
+  const { stompClient } = useWebSocket();
   const [event, setEvent] = useState(null);
   const [guestName, setGuestName] = useState(
     localStorage.getItem("guestName") || "Anonimo"
@@ -17,17 +20,7 @@ const GuestEvent = () => {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const guestParsed = JSON.parse(guestSession);
-  const guestId = guestParsed.id;
-  const [requestStatus, setRequestStatus] = useState("");
   const [eventName, setEventName] = useState("");
-  const [responseStatus, setResponseStatus] = useState("");
-  const [responseSongName, setResponseSongName] = useState("");
-
-  const initWebSocket = () => {
-    connectWebSocket((stomp) => {
-      setStompClient(stomp);
-    });
-  };
 
   const loadEvent = async () => {
     setIsLoading(true);
@@ -48,10 +41,11 @@ const GuestEvent = () => {
       setEventName(response.name);
       setPhase(currentPhase);
       setSongs(filteredSongs);
-      initWebSocket();
     } catch (err) {
       console.log(err);
       setError(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,42 +70,17 @@ const GuestEvent = () => {
     return () => subscription.unsubscribe();
   }, [stompClient, accessCode]);
 
-  useEffect(() => {
-    if (!stompClient || !accessCode) return;
-    const subscription = stompClient.subscribe("/user/queue/errors", (msg) => {
-      const err = JSON.parse(msg.body);
-      console.error("Errore:", err.message);
-      setError(err.message);
-      setRequestStatus("");
-    });
-    return () => subscription.unsubscribe();
-  }, [stompClient, accessCode]);
-
   const filteredSongs = songs.filter(
     (song) =>
       song.title.toLowerCase().includes(search.toLowerCase()) ||
       song.artist.toLowerCase().includes(search.toLowerCase())
   );
 
-  useEffect(() => {
-    if (requestStatus) {
-      const timer = setTimeout(() => setRequestStatus(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [requestStatus]);
-
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => setError(""), 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [error]);
-
   const sendRequest = (songId) => {
     if (!stompClient || !accessCode) return;
 
     if (!songId) {
-      setError("Errore: ID del brano non valido.");
+      toast.error("Errore: ID del brano non valido.");
       return;
     }
 
@@ -123,32 +92,13 @@ const GuestEvent = () => {
 
     try {
       stompClient.send("/app/requests/create", {}, JSON.stringify(payload));
-      setRequestStatus("Richiesta Inviata!");
-      //   console.log(requestStatus);
+      toast.loading("Invio richiesta... in attesa di risposta", {
+        id: "request",
+      });
     } catch (err) {
-      setError(err);
+      toast.error(err);
     }
   };
-
-  useEffect(() => {
-    if (!stompClient || !accessCode || !guestId) return;
-    const subscription = stompClient.subscribe(
-      `/topic/event/${accessCode}/requests/${guestId}`,
-      (msg) => {
-        const data = JSON.parse(msg.body);
-        // console.log(data);
-        setResponseSongName(data.songName);
-        if (data.status === "REJECTED") {
-          setResponseStatus("RESPINTA");
-        } else {
-          setResponseStatus("ACCETTATA");
-        }
-      }
-    );
-    // console.log(responseSongName);
-    // console.log(responseStatus);
-    return () => subscription.unsubscribe();
-  }, [stompClient, accessCode, guestId]);
 
   return (
     <div>
@@ -192,16 +142,12 @@ const GuestEvent = () => {
             {/* <!-- Contenitore lista --> */}
             <div className="bg-opacity-60 max-h-96 overflow-y-auto rounded-lg border-4 border-yellow-600 bg-black p-4">
               {/* <!-- Lista canzoni --> */}
-              {error && (
-                <p className="text-center text-red-700 font-semibold mb-2">
-                  {error}
-                </p>
+              {isLoading && (
+                <div className="flex justify-center">
+                  <Spinner />
+                </div>
               )}
-              {requestStatus && (
-                <p className="text-center text-green-600 font-semibold">
-                  {requestStatus}
-                </p>
-              )}
+
               <ul className="space-y-3">
                 {filteredSongs.map((song, index) => (
                   <li
