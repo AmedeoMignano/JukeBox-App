@@ -23,7 +23,7 @@ export const WebSocketProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!stompClient) return;
+    if (!stompClient || !guestId || !accessCode) return;
 
     const subscription = stompClient.subscribe("/user/queue/errors", (msg) => {
       const err = JSON.parse(msg.body);
@@ -35,7 +35,7 @@ export const WebSocketProvider = ({ children }) => {
   }, [stompClient]);
 
   useEffect(() => {
-    if (!stompClient || !guestId) return;
+    if (!stompClient || !guestId || !accessCode) return;
 
     const subscription = stompClient.subscribe(
       `/topic/event/${accessCode}/requests/${guestId}`, // ascolta genericamente tutti gli eventi

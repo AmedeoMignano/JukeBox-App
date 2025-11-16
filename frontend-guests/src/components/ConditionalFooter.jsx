@@ -3,9 +3,13 @@ import { useLocation } from "react-router-dom";
 import Footer from "./Footer";
 
 const ConditionalFooter = () => {
-  const { accessCode } = JSON.parse(localStorage.getItem("guestSession"));
+  const guestSession = localStorage.getItem("guestSession");
+  const guest = guestSession ? JSON.parse(guestSession) : null;
+  const accessCode = guest?.accessCode;
   const location = useLocation();
+
   if (
+    !guest ||
     location.pathname === "/" ||
     location.pathname === `/guest/event/${accessCode}`
   ) {
