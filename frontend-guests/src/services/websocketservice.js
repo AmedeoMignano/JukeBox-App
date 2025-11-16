@@ -1,7 +1,7 @@
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
-const SOCKET_URL = "http:/localhost:3001/ws";
+const SOCKET_URL = "https://rich-sheelagh-amedeomignano-0e8df352.koyeb.app/ws";
 
 export const connectWebSocket = (onConnectCallback) => {
   const socket = new SockJS(SOCKET_URL);
