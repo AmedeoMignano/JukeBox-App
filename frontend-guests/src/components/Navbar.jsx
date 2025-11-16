@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <nav className="nav-bar">
       <div className="flex items-center">
-        <img src="/src/assets/img/logo-nav.png" alt="logo" className="w-38" />
+        <img src="/logo-nav.png" alt="logo" className="w-38" />
       </div>
 
       {/* Desktop Menu */}

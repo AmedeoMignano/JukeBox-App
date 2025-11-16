@@ -4,14 +4,14 @@ const Contact = () => {
   return (
     <>
       {/*Mobile Hero Section*/}
-      <div className="flex justify-center items-center sm:hidden h-[70vh] w-full bg-[url(/src/assets/img/contact-mobile.jpeg)] bg-no-repeat bg-cover bg-center">
+      <div className="flex justify-center items-center sm:hidden h-[70vh] w-full bg-[url(/contact-mobile.jpeg)] bg-no-repeat bg-cover bg-center">
         <div className="text-center mt-7">
           <h1 className="text-5xl text-white font-bold">BANDA CORTA</h1>
           <p className="text-white text-3xl">CONTATTI</p>
         </div>
       </div>
       {/*Tablet Desktop Hero Section*/}
-      <div className="hidden sm:flex justify-center items-center  sm:h-[70vh] lg:h-[90vh] w-full bg-[url(/src/assets/img/hero-desktop.jpeg)] bg-no-repeat bg-cover bg-center">
+      <div className="hidden sm:flex justify-center items-center  sm:h-[70vh] lg:h-[90vh] w-full bg-[url(/hero-desktop.jpeg)] bg-no-repeat bg-cover bg-center">
         <div className="text-center mt-7">
           <h1 className="sm:text-6xl lg:text-8xl text-white font-bold">
             BANDA CORTA
@@ -49,7 +49,7 @@ const Contact = () => {
             rel="noopener noreferrer"
           >
             <img
-              src="/src/assets/img/matrimonio-com.jpeg"
+              src="/matrimonio-com.jpeg"
               alt="matrimonio_com"
               className="w-13"
             />
@@ -62,7 +62,7 @@ const Contact = () => {
             rel="noopener noreferrer"
           >
             <img
-              src="/src/assets/img/Instagram_icon.png.webp"
+              src="/Instagram_icon.png.webp"
               alt="instagram_logo"
               className="w-13"
             />
@@ -75,7 +75,7 @@ const Contact = () => {
             rel="noopener noreferrer"
           >
             <img
-              src="/src/assets/img/facebook_logo.png"
+              src="/facebook_logo.png"
               alt="matrimonio.com"
               className="w-13"
             />

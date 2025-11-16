@@ -22,7 +22,7 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <img
-                src="/src/assets/img/matrimonio-com.jpeg"
+                src="/matrimonio-com.jpeg"
                 alt="matrimonio_com"
                 className="w-13"
               />
@@ -35,7 +35,7 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <img
-                src="/src/assets/img/Instagram_icon.png.webp"
+                src="/Instagram_icon.png.webp"
                 alt="instagram_logo"
                 className="w-13"
               />
@@ -48,7 +48,7 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <img
-                src="/src/assets/img/facebook_logo.png"
+                src="/facebook_logo.png"
                 alt="matrimonio.com"
                 className="w-13"
               />

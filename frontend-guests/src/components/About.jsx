@@ -4,7 +4,7 @@ const About = () => {
   return (
     <>
       {/*Mobile Hero Section*/}
-      <div className="flex justify-center items-center sm:hidden h-[70vh] w-full bg-[url(/src/assets/img/contact-mobile.jpeg)] bg-no-repeat bg-cover bg-center">
+      <div className="flex justify-center items-center sm:hidden h-[70vh] w-full bg-[url(/contact-mobile.jpeg)] bg-no-repeat bg-cover bg-center">
         <div className="text-center mt-7">
           <h1 className="text-5xl text-white font-bold">BANDA CORTA</h1>
           <p className="text-white text-3xl">ABOUT</p>
@@ -22,11 +22,7 @@ const About = () => {
 
       <div className="container mx-auto mt-10 mb-13">
         <div className="mx-auto w-9/10 md:w-3/4 lg:w-2/3">
-          <img
-            src="/src/assets/img/or.jpeg"
-            alt="banda.jpeg"
-            className="w-full"
-          />
+          <img src="/or.jpeg" alt="banda.jpeg" className="w-full" />
         </div>
       </div>
 

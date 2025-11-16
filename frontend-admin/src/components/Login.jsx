@@ -42,11 +42,7 @@ const Login = () => {
         <div className="px-10 flex items-center">
           <div className="flex w-full">
             <div className="w-full hidden md:inline-block">
-              <img
-                className="h-full"
-                src="../src/assets/img/logo 2023.jpg"
-                alt="logo"
-              />
+              <img className="h-full" src="/logo 2023.jpg" alt="logo" />
             </div>
 
             <div className="w-full flex flex-col items-center justify-center">
