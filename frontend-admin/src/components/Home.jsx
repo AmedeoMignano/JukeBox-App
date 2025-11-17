@@ -110,41 +110,47 @@ const Home = () => {
 
   return (
     <div className="px-4 pt-7 h-screen bg-gray-100">
-      {isloading && <Spinner />}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h1 className=" ps-3 mb-2 text-3xl">Evento Attivo</h1>
           <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-2">
-            <h1 className="text-2xl text-red-700">
-              {event ? event.name : error}
-            </h1>
-            <p className="text-[18px]">
-              {" "}
-              Fase:{" "}
-              <span className="text-red-700">
-                {currentPhase === "CENA" ? "CENA" : "BALLO"}
-              </span>
-            </p>
-            <p className="text-[18px]">
-              Numero totali richieste:{" "}
-              <span className="text-red-700">
-                {event ? event.requests.length : ""}
-              </span>
-            </p>
-            <p className="text-[18px]">
-              Numero totali ospiti che si sono collegati:{" "}
-              <span className="text-red-700">
-                {event ? event.guests.length : ""}
-              </span>
-            </p>
-            <button
-              type="button"
-              className="login-button mb-4 cursor-pointer"
-              disabled={isChanging}
-              onClick={tooglePhase}
-            >
-              Cambia fase in {currentPhase === "CENA" ? "BALLO" : "CENA"}
-            </button>
+            {isloading ? (
+              <div className="flex justify-center">
+                <Spinner />
+              </div>
+            ) : (
+              <>
+                <h1 className="text-2xl text-red-700">
+                  {event ? event.name : error}
+                </h1>
+                <p className="text-[18px]">
+                  Fase:{" "}
+                  <span className="text-red-700">
+                    {currentPhase === "CENA" ? "CENA" : "BALLO"}
+                  </span>
+                </p>
+                <p className="text-[18px]">
+                  Numero totali richieste:{" "}
+                  <span className="text-red-700">
+                    {event ? event.requests.length : ""}
+                  </span>
+                </p>
+                <p className="text-[18px]">
+                  Numero totali ospiti che si sono collegati:{" "}
+                  <span className="text-red-700">
+                    {event ? event.guests.length : ""}
+                  </span>
+                </p>
+                <button
+                  type="button"
+                  className="login-button mb-4 cursor-pointer"
+                  disabled={isChanging}
+                  onClick={tooglePhase}
+                >
+                  Cambia fase in {currentPhase === "CENA" ? "BALLO" : "CENA"}
+                </button>
+              </>
+            )}
           </div>
         </div>
         <div>
@@ -157,10 +163,8 @@ const Home = () => {
               stomp={stompClient}
             />
           ) : (
-            <div className="text-center bg-white rounded-2xl shadow-md p-4">
-              <p className="text-gray-600">
-                {error || "Nessuna richiesta al momento"}
-              </p>
+            <div className="text-center">
+              <p className="text-gray-600">{error.message}</p>
             </div>
           )}
         </div>

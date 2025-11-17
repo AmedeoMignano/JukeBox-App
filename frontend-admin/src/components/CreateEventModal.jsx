@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createEvent } from "../services/eventservice";
 import { getAllSongs } from "../services/songService";
+import toast from "react-hot-toast";
 
 const CreateEventModal = ({ closeModal, onEventCreated }) => {
   const [songs, setSongs] = useState([]);
@@ -40,16 +41,20 @@ const CreateEventModal = ({ closeModal, onEventCreated }) => {
   }, [searchSong, songs]);
 
   const handleCreate = async () => {
-    try {
-      await createEvent({
-        ...form,
-        songsId: selectedSongs.map((s) => s.id),
-      });
-      onEventCreated();
-      closeModal();
-    } catch (err) {
-      console.error("Errore creazione evento:", err);
-    }
+    const addEvent = createEvent({
+      ...form,
+      songsId: selectedSongs.map((s) => s.id),
+    });
+    await toast.promise(addEvent, {
+      loading: "Creazione evento...",
+      success: "Evento creato!",
+      error: (err) => {
+        console.log(err);
+        return "Impossibile Creare Evento!";
+      },
+    });
+    onEventCreated();
+    closeModal();
   };
 
   const toggleSong = (song) => {
@@ -69,17 +74,20 @@ const CreateEventModal = ({ closeModal, onEventCreated }) => {
           type="text"
           placeholder="Nome evento"
           className="w-full border p-2 rounded mb-2"
+          required
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
         <input
           type="text"
           placeholder="Location"
           className="w-full border p-2 rounded mb-2"
+          required
           onChange={(e) => setForm({ ...form, location: e.target.value })}
         />
         <input
           type="date"
           className="w-full border p-2 rounded mb-2"
+          required
           onChange={(e) => setForm({ ...form, date: e.target.value })}
         />
         <label className="flex items-center gap-2 mb-3">

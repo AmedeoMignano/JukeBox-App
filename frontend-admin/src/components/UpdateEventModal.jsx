@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { updateEvent } from "../services/eventservice";
+import toast from "react-hot-toast";
 
 const UpdateEventModal = ({ event, closeModal, onEventUpdated }) => {
   const [form, setForm] = useState({
@@ -10,13 +11,15 @@ const UpdateEventModal = ({ event, closeModal, onEventUpdated }) => {
   });
 
   const handleUpdate = async () => {
-    try {
-      await updateEvent(event.id, form);
-      onEventUpdated();
-      closeModal();
-    } catch (err) {
-      console.error("Errore aggiornamento evento:", err);
-    }
+    const updatePromise = updateEvent(event.id, form);
+    await toast.promise(updatePromise, {
+      loading: "Aggiornamento evento...",
+      success: "Evento aggiornato!",
+      error: (err) => {
+        return `Errore: ${err.message}`;
+      },
+    });
+    closeModal(), onEventUpdated();
   };
 
   return (
@@ -58,13 +61,13 @@ const UpdateEventModal = ({ event, closeModal, onEventUpdated }) => {
         <div className="flex justify-between">
           <button
             onClick={closeModal}
-            className="bg-gray-300 px-4 py-2 rounded-xl"
+            className="bg-gray-300 px-4 py-2 rounded-xl cursor-pointer"
           >
             Annulla
           </button>
           <button
             onClick={handleUpdate}
-            className="bg-blue-600 text-white px-4 py-2 rounded-xl"
+            className="bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer"
           >
             Salva
           </button>

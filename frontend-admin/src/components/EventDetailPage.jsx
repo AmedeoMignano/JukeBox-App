@@ -9,6 +9,7 @@ import UpdateEventModal from "../components/UpdateEventModal";
 import Spinner from "./Spinner";
 import { Trash } from "react-bootstrap-icons";
 import AddSongsModal from "./AddSongsModal";
+import toast from "react-hot-toast";
 
 const EventDetailPage = () => {
   const { id } = useParams();
@@ -23,8 +24,8 @@ const EventDetailPage = () => {
     try {
       const response = await getEventById(id);
       setEvent(response);
-      console.log(response);
-      console.log(id);
+      // console.log(response);
+      // console.log(id);
     } catch (err) {
       //   console.error("Errore nel caricamento evento:", err);
       setError(err.message);
@@ -64,30 +65,34 @@ const EventDetailPage = () => {
 
   const handleDelete = async () => {
     if (!window.confirm("Sei sicuro di voler eliminare questo evento?")) return;
-    try {
-      await deleteEvent(id);
-      navigate("/events");
-    } catch (err) {
-      console.error("Errore eliminazione evento:", err);
-    }
+    const deleteEv = deleteEvent(id);
+    await toast.promise(deleteEv, {
+      loading: "Eliminazione evento in corso...",
+      success: `Evento '${event.name}' eliminato`,
+      error: (err) => {
+        return `Errore: ${err.message}`;
+      },
+    });
+    navigate("/events");
   };
 
   const handleDeleteSong = async (songId, songTitle) => {
     if (!window.confirm(`Sei sicuro di voler eliminare ${songTitle}?`)) return;
 
-    try {
-      await deleteFromRepertory(id, songId);
-      await fetchEvent();
-      console.log("Canzone eliminata con successo");
-    } catch (err) {
-      setError(err.response.data.message);
-      alert(err.response.data.message);
-    }
+    const deleteSong = deleteFromRepertory(id, songId);
+    await toast.promise(deleteSong, {
+      loading: "Eliminazione in corso..",
+      success: `Canzone ${songTitle} eliminata con successo`,
+      error: (err) => {
+        return `Errore: ${err.message}`;
+      },
+    });
+    fetchEvent();
   };
 
   if (loading)
     return (
-      <div className="pt-5 flex justify-center">
+      <div className="pt-5 flex justify-center min-h-screen bg-gray-100">
         <Spinner />
       </div>
     );

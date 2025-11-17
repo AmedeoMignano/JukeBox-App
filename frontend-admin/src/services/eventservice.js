@@ -66,7 +66,6 @@ export const deleteEvent = async (id) => {
       `${API_URL}/events/${id}`,
       getAuthHeader()
     );
-    console.log(response);
     return response;
   } catch (err) {
     throw err.response?.data || err.message;

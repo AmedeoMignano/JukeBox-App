@@ -14,6 +14,7 @@ import Event from "./components/Event";
 import EventDetailPage from "./components/EventDetailPage";
 import Songs from "./components/Songs";
 import RegisterUser from "./components/RegisterUser";
+import { Toaster } from "react-hot-toast";
 
 function ProtectedRoute({ element }) {
   return isAuthenticated() ? element : <Navigate to="/login" />;
@@ -29,6 +30,7 @@ function AppContent() {
   return (
     <>
       {isAuth && <Navbar />}
+      <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={isAuth ? <Home /> : <Login />} />

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { getAllSongs } from "../services/songService";
 import { addSongToRepertory } from "../services/eventservice";
 import Spinner from "./Spinner";
+import toast from "react-hot-toast";
 
 const AddSongsModal = ({
   eventId,
@@ -57,17 +58,18 @@ const AddSongsModal = ({
       alert("Seleziona almeno un brano da aggiungere");
       return;
     }
+    const songsIdsToAdd = selectedSongs.map((s) => s.id);
+    const addSongs = addSongToRepertory(eventId, songsIdsToAdd);
+    await toast.promise(addSongs, {
+      loading: "Aggiunzione in corso...",
+      success: "Aggiunzione completata!",
+      error: (err) => {
+        return `Errore: ${err.message}`;
+      },
+    });
 
-    try {
-      const songsIdsToAdd = selectedSongs.map((s) => s.id);
-      const response = await addSongToRepertory(eventId, songsIdsToAdd);
-      console.log(response);
-      onUpdateRepertory();
-      closeModal();
-    } catch (err) {
-      setError(err);
-      alert(err.message);
-    }
+    closeModal();
+    onUpdateRepertory();
   };
 
   if (loading)

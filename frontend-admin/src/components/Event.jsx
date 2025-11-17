@@ -15,7 +15,7 @@ const Event = () => {
     try {
       const response = await getAllEvents();
       setEvent(response);
-      console.log(response);
+      // console.log(response);
       setIsLoading(false);
     } catch (err) {
       err.message;

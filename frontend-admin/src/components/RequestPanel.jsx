@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getPending } from "../services/requestservice";
+import Spinner from "./Spinner";
 
 const RequestPanel = ({ access, stomp }) => {
   const [requests, setRequests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [removing, setRemoving] = useState([]);
 
@@ -12,6 +14,8 @@ const RequestPanel = ({ access, stomp }) => {
       setRequests(result.data || []);
     } catch (err) {
       setError(err.response?.data?.message || "Errore nel caricamento");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,7 +62,11 @@ const RequestPanel = ({ access, stomp }) => {
 
   return (
     <div className="transition-all">
-      {Array.isArray(requests) && requests.length > 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
+      ) : Array.isArray(requests) && requests.length > 0 ? (
         requests.map((req) => (
           <div
             key={req.id}
@@ -99,9 +107,7 @@ const RequestPanel = ({ access, stomp }) => {
         ))
       ) : (
         <div className="text-center bg-white rounded-2xl shadow-md p-4">
-          <p className="text-gray-600">
-            {error || "Nessuna richiesta al momento"}
-          </p>
+          <p className="text-gray-600">{error}</p>
         </div>
       )}
     </div>
