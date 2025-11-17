@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { updateSong } from "../services/songService";
+import toast from "react-hot-toast";
 
 const UpdateSongModal = ({ closeModal, onSongUpdated, songToUpdate }) => {
   const [form, setForm] = useState({
@@ -14,15 +15,17 @@ const UpdateSongModal = ({ closeModal, onSongUpdated, songToUpdate }) => {
       setError("Tutti i campi sono obbligatori.");
       return;
     }
-    try {
-      const response = await updateSong(songToUpdate.id, form);
-      console.log(response);
-      closeModal();
-      onSongUpdated();
-    } catch (err) {
-      console.log(err);
-      setError(err);
-    }
+    const update = updateSong(songToUpdate.id, form);
+    await toast.promise(update, {
+      loading: "Modifica in corso...",
+      success: "Modifica effettuata!",
+      error: (err) => {
+        console.log(err);
+        return "Errore nella modifica della canzone!";
+      },
+    });
+    closeModal();
+    onSongUpdated();
   };
   return (
     <div className="fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center p-4 z-50">

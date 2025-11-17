@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createSong } from "../services/songService";
-import Alert from "./Alert";
+import toast from "react-hot-toast";
 
 const CreateSongModal = ({ closeModal, onCreatedSong }) => {
   const [form, setForm] = useState({
@@ -8,18 +8,19 @@ const CreateSongModal = ({ closeModal, onCreatedSong }) => {
     artist: "",
     category: "",
   });
-  const [error, setError] = useState("");
 
   const handleCreateSong = async () => {
-    try {
-      const response = await createSong({ ...form });
-      console.log(response);
-      closeModal();
-      onCreatedSong();
-    } catch (err) {
-      setError(err.message);
-      console.log(err.message);
-    }
+    const create = createSong({ ...form });
+    await toast.promise(create, {
+      loading: "Creazione canzone...",
+      success: `Canzone '${form.title}' aggiunta!`,
+      error: (err) => {
+        console.log(err);
+        return "Errore nel caricamento della canzone!";
+      },
+    });
+    closeModal();
+    onCreatedSong();
   };
   return (
     <div className="fixed inset-0 bg-gray-100 flex justify-center items-center p-4">
@@ -67,11 +68,6 @@ const CreateSongModal = ({ closeModal, onCreatedSong }) => {
           >
             Crea
           </button>
-          {error && (
-            <div className="flex justify-center">
-              <Alert errors={error} />
-            </div>
-          )}
         </div>
       </div>
     </div>

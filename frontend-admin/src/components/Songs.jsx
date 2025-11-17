@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import { Pencil, Trash } from "react-bootstrap-icons";
 import CreateSongModal from "./CreateSongModal";
 import UpdateSongModal from "./UpdateSongModal";
+import toast from "react-hot-toast";
 
 const Songs = () => {
   const [songs, setSongs] = useState([]);
@@ -27,12 +28,16 @@ const Songs = () => {
 
   const handleDeleteSong = async (id, songTitle) => {
     if (!window.confirm(`Sei sicuro di voler eliminare ${songTitle}?`)) return;
-    try {
-      await deleteSong(id);
-      await fetchSongs();
-    } catch (err) {
-      setError(err.message);
-    }
+    const deleteS = deleteSong(id);
+    await toast.promise(deleteS, {
+      loading: "Eliminazione in corso...",
+      success: "Eliminazione completata!",
+      error: (err) => {
+        console.log(err);
+        return "Errore nella cancellazione della canzone!";
+      },
+    });
+    fetchSongs();
   };
   useEffect(() => {
     fetchSongs();
@@ -53,7 +58,7 @@ const Songs = () => {
 
   if (isLoading)
     return (
-      <div className="flex mt-10 justify-center">
+      <div className="flex min-h-screen bg-gray-100 py-10 justify-center ">
         <Spinner />
       </div>
     );
