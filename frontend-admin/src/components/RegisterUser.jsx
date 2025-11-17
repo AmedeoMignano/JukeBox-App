@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createUser } from "../services/userservice";
 import Alert from "./Alert";
+import toast from "react-hot-toast";
 
 const RegisterUser = () => {
   const initialFormState = {
@@ -8,20 +9,20 @@ const RegisterUser = () => {
     email: "",
     password: "",
   };
-  const [error, setError] = useState([]);
   const [form, setForm] = useState(initialFormState);
 
   const handleCreateUser = async (e) => {
     e.preventDefault();
-    try {
-      const response = await createUser({ ...form });
-      console.log(response);
-      alert("Registrazione avvenuta con successo");
-      setForm(initialFormState);
-      setError([]);
-    } catch (err) {
-      setError(err.errorMessages);
-    }
+    const user = createUser({ ...form });
+
+    await toast.promise(user, {
+      loading: "Creazione utente...",
+      success: "Creazione utente completata!",
+      error: (err) => {
+        console.log(err);
+        return "Impossibile creare utente!";
+      },
+    });
   };
   return (
     <div className="min-h-screen bg-gray-100 py-10">
@@ -64,15 +65,6 @@ const RegisterUser = () => {
           </div>
         </form>
       </div>
-      {error &&
-        error.map((err) => (
-          <div className="flex flex-column justify-center" key={err}>
-            <div className="flex flex-column my-4">
-              {" "}
-              <Alert errors={err} />
-            </div>
-          </div>
-        ))}
     </div>
   );
 };
