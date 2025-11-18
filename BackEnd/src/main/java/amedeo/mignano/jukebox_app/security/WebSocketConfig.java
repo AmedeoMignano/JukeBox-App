@@ -16,7 +16,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                setAllowedOrigins(  "http://localhost:5174",
                        "http://localhost:5173",
                        "http://127.0.0.1:5500",
-                       "https://rich-sheelagh-amedeomignano-0e8df352.koyeb.app").
+                       "https://rich-sheelagh-amedeomignano-0e8df352.koyeb.app",
+                       "https://banda-corta-jukebox.vercel.app",
+                       "https://juke-box-app-nine.vercel.app").
                withSockJS();
     }
 
