@@ -66,7 +66,7 @@ const CreateEventModal = ({ closeModal, onEventCreated }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-100 flex justify-center items-center p-4">
+    <div className="fixed inset-0 bg-gray-100 flex justify-center items-center p-4 overflow-y-scroll">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-lg relative">
         <h2 className="text-2xl font-semibold text-center mb-4">Crea Evento</h2>
 
