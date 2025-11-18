@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createGuestSession } from "../services/guestsessionservice";
 import Spinner from "./Spinner";
+import { useWebSocket } from "../context/WebSocketContext";
 
 const GuestHome = () => {
   const [guestName, setGuestName] = useState(
@@ -10,6 +11,7 @@ const GuestHome = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setGuestData } = useWebSocket();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +25,7 @@ const GuestHome = () => {
 
       localStorage.setItem("guestName", guestName);
       localStorage.setItem("guestSession", JSON.stringify(response));
+      if (setGuestData) setGuestData(response);
 
       navigate(`/guest/event/${accessCode}`, { replace: true });
     } catch (err) {

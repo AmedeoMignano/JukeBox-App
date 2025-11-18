@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { connectWebSocket } from "../services/websocketservice";
 import { getEventByAccessCode } from "../services/eventservice";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
@@ -8,18 +7,17 @@ import { useWebSocket } from "../context/WebSocketContext";
 
 const GuestEvent = () => {
   const { accessCode } = useParams();
-  const { stompClient } = useWebSocket();
+  const { stompClient, guestData } = useWebSocket();
   const [event, setEvent] = useState(null);
   const [guestName, setGuestName] = useState(
     localStorage.getItem("guestName") || "Anonimo"
   );
-  const guestSession = localStorage.getItem("guestSession");
   const [songs, setSongs] = useState([]);
   const [phase, setPhase] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
-  const guestParsed = JSON.parse(guestSession);
+  const guestParsed = guestData;
   const [eventName, setEventName] = useState("");
 
   const loadEvent = async () => {

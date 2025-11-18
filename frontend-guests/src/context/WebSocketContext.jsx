@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { connectWebSocket } from "../services/websocketservice";
-import { client } from "stompjs";
 import toast from "react-hot-toast";
 
 const WebSocketContext = createContext();
@@ -9,18 +8,18 @@ export const useWebSocket = () => useContext(WebSocketContext);
 
 export const WebSocketProvider = ({ children }) => {
   const [stompClient, setStompClient] = useState(null);
-
-  const guestSession = localStorage.getItem("guestSession");
-  const guest = guestSession ? JSON.parse(guestSession) : null;
-  console.log(guest);
-  const guestId = guest?.id;
-  const accessCode = guest?.accessCode;
+  const [guestData, setGuestData] = useState(() => {
+    const guestSession = localStorage.getItem("guestSession");
+    return guestSession ? JSON.parse(guestSession) : null;
+  });
 
   useEffect(() => {
     connectWebSocket((client) => {
       setStompClient(client);
     });
   }, []);
+  const guestId = guestData?.id;
+  const accessCode = guestData?.accessCode;
 
   useEffect(() => {
     if (!stompClient || !guestId || !accessCode) return;
@@ -32,13 +31,13 @@ export const WebSocketProvider = ({ children }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [stompClient]);
+  }, [accessCode, guestId, stompClient]);
 
   useEffect(() => {
     if (!stompClient || !guestId || !accessCode) return;
 
     const subscription = stompClient.subscribe(
-      `/topic/event/${accessCode}/requests/${guestId}`, // ascolta genericamente tutti gli eventi
+      `/topic/event/${accessCode}/requests/${guestId}`,
       (msg) => {
         const data = JSON.parse(msg.body);
 
@@ -55,10 +54,10 @@ export const WebSocketProvider = ({ children }) => {
     );
 
     return () => subscription.unsubscribe();
-  }, [stompClient, guestId]);
+  }, [stompClient, guestId, accessCode]);
 
   return (
-    <WebSocketContext.Provider value={{ stompClient }}>
+    <WebSocketContext.Provider value={{ stompClient, guestData, setGuestData }}>
       {children}
     </WebSocketContext.Provider>
   );
