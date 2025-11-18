@@ -143,7 +143,7 @@ const Home = () => {
                 </p>
                 <button
                   type="button"
-                  className="login-button mb-4 cursor-pointer"
+                  className="shadow-button-red-2xl my-4 cursor-pointer"
                   disabled={isChanging}
                   onClick={tooglePhase}
                 >

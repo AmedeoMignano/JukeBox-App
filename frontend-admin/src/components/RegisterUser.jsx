@@ -56,10 +56,7 @@ const RegisterUser = () => {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
           <div className="flex justify-end">
-            <button
-              className=" bg-red-700 text-white rounded-2xl p-3 hover:bg-red-800 cursor-pointer"
-              type="submit"
-            >
+            <button className="shadow-button-red cursor-pointer" type="submit">
               Registra
             </button>
           </div>

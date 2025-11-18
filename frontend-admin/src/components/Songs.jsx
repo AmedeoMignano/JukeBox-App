@@ -20,7 +20,8 @@ const Songs = () => {
       //   console.log(response);
       setSongs(response);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      setError(err);
     } finally {
       setIsLoading(false);
     }
@@ -80,14 +81,14 @@ const Songs = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
-          className="bg-red-700 text-white px-4 py-2 rounded-xl shadow hover:bg-red-800 cursor-pointer"
+          className="shadow-button-red cursor-pointer"
           onClick={() => setCreateAddSongModalOpen(true)}
         >
           + Aggiungi
         </button>
       </div>
       <div className="bg-white rounded-2xl shadow-md p-6 mt-10 max-w-4xl mx-auto">
-        <ul className="divide-y divide-gray-300">
+        <ul className="divide-y divide-red-800">
           {filteredSongs.map((song) => (
             <li key={song.id} className="pb-5 pt-3">
               <p className="font-medium">
@@ -99,15 +100,15 @@ const Songs = () => {
               <p className="font-medium">
                 Categoria: <span className="text-red-700">{song.category}</span>
               </p>
-              <div className="flex justify-between">
+              <div className="flex justify-between my-2">
                 <button
-                  className="flex items-center text-white bg-red-700 rounded p-1 mt-2 cursor-pointer hover:bg-red-800"
+                  className="flex items-center cursor-pointer shadow-button-red"
                   onClick={() => handleDeleteSong(song.id, song.title)}
                 >
                   Elimina <Trash className=" ms-2" />
                 </button>
                 <button
-                  className="flex items-center text-white bg-blue-600 rounded p-1 mt-2 cursor-pointer hover:bg-blue-700"
+                  className="flex items-center  cursor-pointer shadow-button-blue"
                   onClick={() => handleEditSong(song)}
                 >
                   Modifica <Pencil className=" ms-2" />

@@ -60,7 +60,7 @@ const Navbar = () => {
         </Link>
 
         <button
-          className="cursor-pointer px-8 py-2 bg-red-700 hover:bg-red-800 transition text-white rounded-full"
+          className="cursor-pointer shadow-button-red-2xl"
           onClick={handlelogOut}
         >
           Logout
@@ -99,6 +99,7 @@ const Navbar = () => {
               : "hover:opacity-70 transition-opacity"
           }
           to="/"
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
         >
           Home
         </Link>
@@ -109,6 +110,7 @@ const Navbar = () => {
               : "hover:opacity-70 transition-opacity"
           }
           to="/events"
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
         >
           Eventi
         </Link>
@@ -119,6 +121,7 @@ const Navbar = () => {
               : "hover:opacity-70 transition-opacity"
           }
           to="/songs"
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
         >
           Canzoni
         </Link>
@@ -129,6 +132,7 @@ const Navbar = () => {
               : "hover:opacity-70 transition-opacity"
           }
           to="/register"
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
         >
           Register
         </Link>

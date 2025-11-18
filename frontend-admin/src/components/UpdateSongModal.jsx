@@ -67,13 +67,13 @@ const UpdateSongModal = ({ closeModal, onSongUpdated, songToUpdate }) => {
         <div className="flex justify-between">
           <button
             onClick={closeModal}
-            className="bg-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 cursor-pointer"
+            className="shadow-button-teal cursor-pointer"
           >
             Annulla
           </button>
           <button
             onClick={handleUpdateSong}
-            className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 cursor-pointer"
+            className="shadow-button-blue cursor-pointer"
           >
             Salva Modifiche
           </button>

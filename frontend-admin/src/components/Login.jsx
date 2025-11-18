@@ -112,7 +112,7 @@ const Login = () => {
 
                 <button
                   type="submit"
-                  className="login-button mb-4 cursor-pointer"
+                  className="shadow-button-red-2xl w-full my-4 cursor-pointer"
                 >
                   Login
                 </button>

@@ -90,14 +90,14 @@ const RequestPanel = ({ access, stomp }) => {
             <div className="flex justify-around pt-2">
               <button
                 type="button"
-                className="button-accept cursor-pointer"
+                className="shadow-button-accept cursor-pointer"
                 onClick={() => updateStatus(req.id, "ACCEPTED")}
               >
                 Accetta
               </button>
               <button
                 type="button"
-                className="button-reject cursor-pointer"
+                className="shadow-button-reject cursor-pointer"
                 onClick={() => updateStatus(req.id, "REJECTED")}
               >
                 Respingi

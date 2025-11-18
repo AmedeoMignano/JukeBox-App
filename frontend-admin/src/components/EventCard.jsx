@@ -18,7 +18,7 @@ const EventCard = ({ events }) => {
       </div>
       <button
         onClick={() => navigate(`/events/${events.id}`)}
-        className="mt-4 bg-red-700 text-white py-2 rounded-xl hover:bg-red-800 transition cursor-pointer"
+        className="mt-4 shadow-button-red transition cursor-pointer"
       >
         Vai all'evento
       </button>

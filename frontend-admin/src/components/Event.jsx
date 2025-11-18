@@ -42,7 +42,7 @@ const Event = () => {
         />
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-red-700 text-white px-4 py-2 rounded-xl shadow hover:bg-red-800 cursor-pointer"
+          className="shadow-button-red cursor-pointer"
         >
           + Crea Evento
         </button>

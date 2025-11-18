@@ -139,7 +139,7 @@ const AddSongsModal = ({
         <div className="flex justify-between mt-4">
           <button
             onClick={closeModal}
-            className="bg-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 cursor-pointer"
+            className="shadow-button-teal cursor-pointer"
           >
             Annulla
           </button>
@@ -148,7 +148,7 @@ const AddSongsModal = ({
             disabled={selectedSongs.length === 0}
             className={`px-4 py-2 rounded-xl cursor-pointer ${
               selectedSongs.length > 0
-                ? "bg-red-700 text-white hover:bg-red-800"
+                ? "shadow-button-red cursor-pointer"
                 : "bg-gray-400 text-gray-700 cursor-not-allowed"
             }`}
           >

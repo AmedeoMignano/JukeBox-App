@@ -82,7 +82,7 @@ const EventDetailPage = () => {
     const deleteSong = deleteFromRepertory(id, songId);
     await toast.promise(deleteSong, {
       loading: "Eliminazione in corso..",
-      success: `Canzone ${songTitle} eliminata con successo`,
+      success: `Canzone '${songTitle}' eliminata con successo`,
       error: (err) => {
         return `Errore: ${err.message}`;
       },
@@ -124,19 +124,19 @@ const EventDetailPage = () => {
         <div className="flex gap-3 mt-5">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 cursor-pointer"
+            className="shadow-button-blue cursor-pointer"
           >
             Modifica Evento
           </button>
           <button
             onClick={handleDelete}
-            className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 cursor-pointer"
+            className="shadow-button-red cursor-pointer"
           >
             Elimina
           </button>
           <button
             onClick={() => navigate("/events")}
-            className="bg-gray-300 px-4 py-2 rounded-xl hover:bg-gray-400 cursor-pointer"
+            className="shadow-button-teal cursor-pointer"
           >
             Indietro
           </button>
@@ -152,7 +152,7 @@ const EventDetailPage = () => {
           </div>
           <div>
             <button
-              className="bg-red-700 text-white px-4 py-2 rounded-xl hover:bg-red-800 cursor-pointer"
+              className="shadow-button-red cursor-pointer"
               onClick={() => {
                 setIsAddSongModalOpen(true);
               }}
@@ -163,19 +163,21 @@ const EventDetailPage = () => {
         </div>
 
         {event.repertory && event.repertory.length > 0 ? (
-          <ul className="divide-y divide-gray-200">
+          <ul className="divide-y divide-red-800">
             {event.repertory.map((song) => (
               <li key={song.id} className="py-2">
                 <p className="font-medium">
                   {song.artist} -{" "}
                   <span className="text-red-700">{song.title}</span>
                 </p>
-                <button
-                  className="flex items-center text-white bg-red-700 rounded p-1 mt-2 cursor-pointer hover:bg-red-800"
-                  onClick={() => handleDeleteSong(song.id, song.title)}
-                >
-                  Elimina <Trash className=" ms-2" />
-                </button>
+                <div className="my-2">
+                  <button
+                    className="flex items-center cursor-pointer shadow-button-red"
+                    onClick={() => handleDeleteSong(song.id, song.title)}
+                  >
+                    Elimina <Trash className=" ms-2" />
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -187,7 +189,7 @@ const EventDetailPage = () => {
       <div className="bg-white rounded-2xl mt-5 shadow-md p-6 max-w-3xl mx-auto">
         <h2 className="text-2xl font-semibold text-red-700 mb-3">Richieste</h2>
         {event.requests && event.requests.length > 0 ? (
-          <ul className="divide-y divide-gray-200">
+          <ul className="divide-y divide-red-800">
             {event.requests.map((req) => (
               <li key={req.id} className="py-2">
                 <p className="font-medium">
