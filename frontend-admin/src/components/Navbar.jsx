@@ -13,7 +13,9 @@ const Navbar = () => {
   return (
     <nav className="nav-bar">
       <div className="flex items-center">
-        <img src="/logo-nav.png" alt="logo" className="w-38" />
+        <Link to="/">
+          <img src="/logo-nav.png" alt="logo" className="w-38" />
+        </Link>
       </div>
 
       {/* Desktop Menu */}

@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Imperial+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
 @layer components {
@@ -25,4 +28,14 @@
   .shadow-button-accept {
     @apply px-10 sm:px-23 md:px-12 lg:px-9 xl:px-12 2xl:px-18 rounded-full text-white bg-gradient-to-r from-green-600 via-green-700 to-green-800 hover:bg-gradient-to-br focus:ring-1 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-sm shadow-green-500/50 dark:shadow-sm dark:shadow-green-800/80 font-medium text-sm py-2.5 text-center leading-5;
   }
+  .login-card {
+    @apply w-full md:w-1/2 flex flex-col items-center justify-center 
+                        bg-white border border-red-700 p-8 sm:p-10 rounded-2xl shadow-md shadow-red-900/60;
+  }
+}
+
+@theme {
+  --font-imperial: "Imperial Script", cursive;
+  --font-playfair: "Playfair", serif;
+  --font-poppins: "Poppins", sans-serif;
 }
