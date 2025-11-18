@@ -27,7 +27,7 @@ const RegisterUser = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-10">
       <div className="bg-white rounded-2xl shadow-md p-6 max-w-3xl mx-auto">
-        <h1 className="text-center mb-5 text-2xl text-red-700">
+        <h1 className="text-center mb-5 text-2xl text-red-700 font-poppins">
           Registra Utente
         </h1>
         <form onSubmit={handleCreateUser}>

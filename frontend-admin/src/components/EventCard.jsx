@@ -6,7 +6,7 @@ const EventCard = ({ events }) => {
   return (
     <div className="bg-white rounded-2xl p-4 shadow-md flex flex-col justify-between">
       <div>
-        <h2 className="text-2xl text-red-700">{events.name}</h2>
+        <h2 className="text-2xl text-red-700 font-poppins">{events.name}</h2>
         <p>{events.location}</p>
         <p>
           Data: <span className="text-red-700">{events.date}</span>

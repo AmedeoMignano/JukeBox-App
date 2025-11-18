@@ -112,7 +112,7 @@ const Home = () => {
     <div className="px-4 pt-7 h-screen bg-gray-100">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h1 className=" ps-3 mb-2 text-3xl">Evento Attivo</h1>
+          <h1 className=" ps-3 mb-2 text-4xl font-playfair">Evento Attivo</h1>
           <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-2">
             {isloading ? (
               <div className="flex justify-center">
@@ -120,7 +120,7 @@ const Home = () => {
               </div>
             ) : (
               <>
-                <h1 className="text-2xl text-red-700">
+                <h1 className="text-2xl text-red-700 font-poppins">
                   {event ? event.name : error}
                 </h1>
                 <p className="text-[18px]">
@@ -154,7 +154,9 @@ const Home = () => {
           </div>
         </div>
         <div>
-          <h1 className=" ps-3 mb-2 text-3xl">Richieste in arrivo</h1>
+          <h1 className=" ps-3 mb-2 text-4xl font-playfair">
+            Richieste in arrivo
+          </h1>
 
           {stompClient && accessCode ? (
             <RequestPanel

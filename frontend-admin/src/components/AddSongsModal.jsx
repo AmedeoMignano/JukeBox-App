@@ -84,7 +84,7 @@ const AddSongsModal = ({
   return (
     <div className="fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center p-4 z-50">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-lg relative">
-        <h2 className="text-2xl font-semibold text-center mb-4">
+        <h2 className="text-2xl font-semibold text-center mb-4 font-poppins">
           Aggiungi Brani al Repertorio
         </h2>
 

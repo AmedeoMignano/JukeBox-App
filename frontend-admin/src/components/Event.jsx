@@ -31,7 +31,9 @@ const Event = () => {
   );
   return (
     <div className="p-10 min-h-screen bg-gray-100">
-      <h1 className="text-center mb-5 text-2xl text-red-700">Lista Eventi</h1>
+      <h1 className="text-center mb-5 text-3xl text-red-700 font-playfair">
+        Lista Eventi
+      </h1>
       <div className="flex justify-between items-center mb-6">
         <input
           type="text"

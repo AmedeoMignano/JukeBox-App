@@ -83,8 +83,9 @@ const RequestPanel = ({ access, stomp }) => {
                   {req.guestName}
                 </span>
               </p>
-              <p className="text-2xl text-red-700 font-bold">
-                {req.artist} - {req.songTitle}
+              <p className="text-2xl text-black font-semibold font-poppins">
+                {req.artist} -{" "}
+                <span className="text-red-700">{req.songTitle}</span>
               </p>
             </div>
             <div className="flex justify-around pt-2">

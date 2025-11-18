@@ -71,7 +71,9 @@ const Songs = () => {
     );
   return (
     <div className="p-10 min-h-screen bg-gray-100">
-      <h1 className="text-center mb-5 text-2xl text-red-700">Lista Canzoni</h1>
+      <h1 className="text-center mb-5 text-3xl text-red-700 font-playfair">
+        Lista Canzoni
+      </h1>
       <div className="flex justify-between items-center mb-6">
         <input
           type="text"
@@ -91,13 +93,13 @@ const Songs = () => {
         <ul className="divide-y divide-red-800">
           {filteredSongs.map((song) => (
             <li key={song.id} className="pb-5 pt-3">
-              <p className="font-medium">
+              <p className="font-medium text-[1.1rem]">
                 Titolo: <span className="text-red-700">{song.title}</span>
               </p>
-              <p className="font-medium">
+              <p className="font-medium text-[1.1rem]">
                 Artista: <span className="text-red-700">{song.artist}</span>
               </p>
-              <p className="font-medium">
+              <p className="font-medium text-[1.1rem]">
                 Categoria: <span className="text-red-700">{song.category}</span>
               </p>
               <div className="flex justify-between my-2">
