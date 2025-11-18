@@ -9,7 +9,9 @@ const Navbar = () => {
   return (
     <nav className="nav-bar">
       <div className="flex items-center">
-        <img src="/logo-nav.png" alt="logo" className="w-38" />
+        <Link to={`/guest/event/${guestSession.accessCode}`}>
+          <img src="/logo-nav.png" alt="logo" className="w-38" />
+        </Link>
       </div>
 
       {/* Desktop Menu */}
@@ -69,7 +71,7 @@ const Navbar = () => {
       <div
         className={`${
           open ? "flex" : "hidden"
-        } absolute top-[80px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}
+        } absolute top-[80px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-md md:hidden`}
       >
         <Link
           className={
@@ -78,6 +80,7 @@ const Navbar = () => {
               : "hover:opacity-70 transition-opacity"
           }
           to={`/guest/event/${guestSession.accessCode}`}
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
         >
           Jukebox
         </Link>
@@ -88,6 +91,7 @@ const Navbar = () => {
               : "hover:opacity-70 transition-opacity"
           }
           to="/about"
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
         >
           About
         </Link>
@@ -98,6 +102,7 @@ const Navbar = () => {
               : "hover:opacity-70 transition-opacity"
           }
           to="/contact"
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
         >
           Contact
         </Link>

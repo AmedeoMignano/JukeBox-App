@@ -6,7 +6,9 @@ const Footer = () => {
     <>
       <div className="bg-red-900 pt-6 flex flex-col items-center md:flex-row md:justify-around">
         <div className="mb-2 md:mb-0">
-          <h1 className="font-bold text-2xl text-white">BANDA CORTA</h1>
+          <h1 className="font-bold text-3xl text-white font-playfair">
+            BANDA CORTA
+          </h1>
         </div>
         <div>
           <p className="text-white font-medium">

@@ -36,7 +36,7 @@ const GuestHome = () => {
   return (
     <div className="home-bg">
       <div className="home-card">
-        <h1 className="text-2xl font-bold text-red-700 mb-4">
+        <h1 className="text-2xl font-semibold text-red-700 mb-4 font-poppins">
           Benvenuto in Banda Corta Jukebox
         </h1>
         <p className="text-gray-400 mb-6">

@@ -103,16 +103,18 @@ const GuestEvent = () => {
   return (
     <div>
       <div className="bg-red-100 text-center py-5">
-        <h1 className="font-medium text-3xl">
+        <h1 className="font-medium text-3xl font-poppins">
           Benvenuto, <span className="text-red-700">{guestName}</span>
         </h1>
-        <p className="text-2xl">
+        <p className="text-2xl font-poppins">
           grazie per essere presente per l'evento:{" "}
-          <span className="text-red-700">{eventName}</span>
+          <span className="text-red-700 font-imperial text-5xl">
+            {eventName}
+          </span>
         </p>
-        <p className="text-2xl mt-3">
-          Questo è <span className="text-red-700">Banda-Corta-Jukebox</span> ,
-          scegli un brano dal nostro jukebox e noi lo eseguiremo per te
+        <p className="text-2xl mt-3 font-poppins">
+          Questo è il <span className="text-red-700">Banda Corta Jukebox</span>{" "}
+          , scegli un brano dal nostro jukebox e noi lo eseguiremo per te
         </p>
       </div>
       <div className="flex min-h-screen justify-center home-bg p-4">
@@ -121,7 +123,7 @@ const GuestEvent = () => {
           <div className="neon-border-top relative mt-10 h-80 overflow-hidden rounded-t-full border-8 border-white bg-yellow-900 shadow-2xl">
             {/* <!-- Specchio/Display centrale con bordi --> */}
             <div className="absolute inset-8 flex flex-col items-center justify-center rounded-t-full border-4 border-yellow-800 bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 shadow-inner">
-              <h1 className="text-center text-[20px] sm:text-3xl font-bold text-white drop-shadow-l mt-5">
+              <h1 className="text-center text-[2rem] sm:text-5xl font-bold text-white drop-shadow-l mt-5 font-imperial">
                 Banda Corta Jukebox
               </h1>
               <p className="font-medium text-1xl text-white">
@@ -152,20 +154,20 @@ const GuestEvent = () => {
                 {filteredSongs.map((song, index) => (
                   <li
                     key={`${song.id}-${index}`}
-                    className="bg-opacity-30 hover:bg-opacity-40 rounded bg-yellow-100 p-4 transition-all hover:bg-yellow-500"
+                    className="bg-opacity-30 hover:bg-opacity-40 rounded bg-yellow-100 p-4 transition-all"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="font-semibold text-black">
+                        <div className="font-semibold text-black font-poppins">
                           {song.title}
                         </div>
-                        <div className="text-sm text-red-600">
+                        <div className="text-sm text-red-600 font-poppins">
                           {song.artist}
                         </div>
                       </div>
                       <div className="text-center">
                         <button
-                          className="bg-red-700 h-20 w-20 rounded-full hover:bg-red-800 cursor-pointer text-white"
+                          className="bg-red-700 h-15 w-15 rounded-full hover:bg-red-800 cursor-pointer text-white"
                           onClick={() => sendRequest(song.id)}
                         >
                           Richiedi
