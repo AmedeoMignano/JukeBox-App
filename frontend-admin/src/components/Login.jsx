@@ -35,11 +35,11 @@ const Login = () => {
   };
   return (
     <div className="min-h-screen flex flex-col items-center">
-      <h1 className="text-center mb-10 mt-12 text-6xl text-red-900 font-imperial">
+      <h1 className="text-center mb-10 mt-12 text-5xl sm:text-6xl text-red-900 font-imperial">
         Banda Corta Jukebox
       </h1>
 
-      <div className="px-4 w-full max-w-5xl flex justify-center items-start">
+      <div className="px-4 w-full max-w-5xl flex justify-center items-start mb-5">
         <div className="flex w-full">
           <div className="w-1/2 hidden md:block pr-8">
             <img className="w-full h-auto" src="/logo 2023.jpg" alt="logo" />

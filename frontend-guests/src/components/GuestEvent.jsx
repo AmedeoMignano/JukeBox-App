@@ -100,7 +100,7 @@ const GuestEvent = () => {
 
   return (
     <div>
-      <div className="bg-red-100 text-center py-5">
+      <div className="bg-red-100 text-center py-5 px-1">
         <h1 className="font-medium text-3xl font-poppins">
           Welcome, <span className="text-red-700">{guestName}</span>
         </h1>
