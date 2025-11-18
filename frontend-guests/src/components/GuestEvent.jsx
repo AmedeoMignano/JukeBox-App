@@ -102,7 +102,7 @@ const GuestEvent = () => {
     <div>
       <div className="bg-red-100 text-center py-5">
         <h1 className="font-medium text-3xl font-poppins">
-          Benvenuto, <span className="text-red-700">{guestName}</span>
+          Welcome, <span className="text-red-700">{guestName}</span>
         </h1>
         <p className="text-2xl font-poppins">
           grazie per essere presente per l'evento:{" "}
