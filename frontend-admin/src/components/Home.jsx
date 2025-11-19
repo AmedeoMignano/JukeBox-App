@@ -3,6 +3,7 @@ import { getActiveEvent } from "../services/eventservice";
 import Spinner from "./Spinner";
 import { connectWebSocket } from "../services/websocketservice";
 import RequestPanel from "./RequestPanel";
+import gsap from "gsap";
 
 const Home = () => {
   const [event, setEvent] = useState(null);
@@ -108,12 +109,31 @@ const Home = () => {
     connectWebSocket((stomp) => setStompClient(stomp));
   }, [accessCode]);
 
+  useEffect(() => {
+    if (!isloading) {
+      gsap.fromTo(
+        ".event-card",
+        {
+          y: -100,
+          opacity: 0,
+        },
+        {
+          zIndex: -1,
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, [isloading]);
+
   return (
     <div className="px-4 pt-7 h-screen bg-gray-100">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h1 className=" ps-3 mb-2 text-4xl font-playfair">Evento Attivo</h1>
-          <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-2">
+          <div className="bg-white rounded-2xl shadow-md p-4 flex flex-col gap-2 event-card">
             {isloading ? (
               <div className="flex justify-center">
                 <Spinner />

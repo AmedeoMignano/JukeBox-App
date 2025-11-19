@@ -3,6 +3,7 @@ import { getAllEvents } from "../services/eventservice";
 import EventCard from "./EventCard";
 import Spinner from "./Spinner";
 import CreateEventModal from "./CreateEventModal";
+import gsap from "gsap";
 
 const Event = () => {
   const [event, setEvent] = useState([]);
@@ -29,6 +30,20 @@ const Event = () => {
   const filteredEvents = event.filter((ev) =>
     ev.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  useEffect(() => {
+    if (filteredEvents.length > 0 && !isLoading) {
+      gsap.from(".event-card", {
+        duration: 0.8,
+        opacity: 0,
+        x: -100,
+        delay: 0.2,
+        stagger: 0.15,
+        ease: "power3.inOut",
+      });
+    }
+  }, [filteredEvents, isLoading]);
+
   return (
     <div className="p-10 min-h-screen bg-gray-100">
       <h1 className="text-center mb-5 text-3xl text-red-700 font-playfair">
@@ -53,7 +68,9 @@ const Event = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
         {filteredEvents.map((ev) => (
-          <EventCard key={ev.id} events={ev} />
+          <div key={ev.id} className="event-card">
+            <EventCard events={ev} />
+          </div>
         ))}
       </div>
       {isModalOpen && (

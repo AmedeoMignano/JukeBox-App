@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createGuestSession } from "../services/guestsessionservice";
 import Spinner from "./Spinner";
 import { useWebSocket } from "../context/WebSocketContext";
+import gsap from "gsap";
 
 const GuestHome = () => {
   const [guestName, setGuestName] = useState(
@@ -12,6 +13,24 @@ const GuestHome = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { setGuestData } = useWebSocket();
+
+  useEffect(() => {
+    {
+      gsap.fromTo(
+        ".register-card",
+        {
+          scale: 2,
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,9 +55,27 @@ const GuestHome = () => {
     }
   };
 
+  useEffect(() => {
+    {
+      gsap.fromTo(
+        ".register-card",
+        {
+          scale: 2,
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, []);
+
   return (
     <div className="home-bg">
-      <div className="home-card">
+      <div className="home-card register-card">
         <h1 className="text-2xl font-semibold text-red-700 mb-4 font-poppins">
           Benvenuto in Banda Corta Jukebox
         </h1>

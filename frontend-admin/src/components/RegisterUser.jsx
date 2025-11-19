@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createUser } from "../services/userservice";
 import Alert from "./Alert";
 import toast from "react-hot-toast";
+import gsap from "gsap";
 
 const RegisterUser = () => {
   const initialFormState = {
@@ -24,9 +25,27 @@ const RegisterUser = () => {
       },
     });
   };
+  useEffect(() => {
+    {
+      gsap.fromTo(
+        ".register-card",
+        {
+          scale: 2,
+          opacity: 0,
+        },
+        {
+          zIndex: -1,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-gray-100 py-10">
-      <div className="bg-white rounded-2xl shadow-md p-6 max-w-3xl mx-auto">
+      <div className="bg-white rounded-2xl shadow-md p-6 max-w-3xl mx-auto register-card">
         <h1 className="text-center mb-5 text-2xl text-red-700 font-poppins">
           Registra Utente
         </h1>

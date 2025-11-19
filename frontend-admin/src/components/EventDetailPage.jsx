@@ -10,6 +10,7 @@ import Spinner from "./Spinner";
 import { Trash } from "react-bootstrap-icons";
 import AddSongsModal from "./AddSongsModal";
 import toast from "react-hot-toast";
+import gsap from "gsap";
 
 const EventDetailPage = () => {
   const { id } = useParams();
@@ -90,6 +91,26 @@ const EventDetailPage = () => {
     fetchEvent();
   };
 
+  useEffect(() => {
+    if (!loading) {
+      gsap.fromTo(
+        ".event-card",
+        {
+          x: -100,
+          opacity: 0,
+        },
+        {
+          zIndex: -1,
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.5,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, [loading]);
+
   if (loading)
     return (
       <div className="pt-5 flex justify-center min-h-screen bg-gray-100">
@@ -101,7 +122,7 @@ const EventDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="bg-white rounded-2xl shadow-md p-6 mb-6 max-w-3xl mx-auto">
+      <div className="bg-white rounded-2xl shadow-md p-6 mb-6 max-w-3xl mx-auto  event-card">
         <h1 className="text-3xl font-semibold text-red-700 mb-3 font-poppins">
           {event.name}
         </h1>
@@ -143,7 +164,7 @@ const EventDetailPage = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-6 max-w-3xl mx-auto">
+      <div className="bg-white rounded-2xl shadow-md p-6 max-w-3xl mx-auto event-card">
         <div className=" w-full flex items-center justify-content-between mb-10">
           <div className="me-auto">
             <h2 className="text-2xl font-semibold text-red-700 mb-3 me-auto font-poppins">

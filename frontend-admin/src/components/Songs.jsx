@@ -5,6 +5,7 @@ import { Pencil, Trash } from "react-bootstrap-icons";
 import CreateSongModal from "./CreateSongModal";
 import UpdateSongModal from "./UpdateSongModal";
 import toast from "react-hot-toast";
+import gsap from "gsap";
 
 const Songs = () => {
   const [songs, setSongs] = useState([]);
@@ -57,6 +58,26 @@ const Songs = () => {
     setSongToEdit(null);
   };
 
+  useEffect(() => {
+    if (!isLoading) {
+      gsap.fromTo(
+        ".song-card",
+        {
+          x: -100,
+          opacity: 0,
+        },
+        {
+          zIndex: -1,
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.5,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, [isLoading]);
+
   if (isLoading)
     return (
       <div className="flex min-h-screen bg-gray-100 py-10 justify-center ">
@@ -89,7 +110,7 @@ const Songs = () => {
           + Aggiungi
         </button>
       </div>
-      <div className="bg-white rounded-2xl shadow-md p-6 mt-10 max-w-4xl mx-auto">
+      <div className="bg-white rounded-2xl shadow-md p-6 mt-10 max-w-4xl mx-auto song-card">
         <ul className="divide-y divide-red-800">
           {filteredSongs.map((song) => (
             <li key={song.id} className="pb-5 pt-3">
