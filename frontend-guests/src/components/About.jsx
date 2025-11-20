@@ -41,8 +41,8 @@ const About = () => {
             stagger: 0.5,
             scrollTrigger: {
               trigger: fadeElement,
-              start: "top 88%",
-              end: "bottom center",
+              start: "top 90%",
+              end: "center",
             },
           }
         );

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getEventByAccessCode } from "../services/eventservice";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
 import { useWebSocket } from "../context/WebSocketContext";
+import gsap from "gsap";
 
 const GuestEvent = () => {
   const { accessCode } = useParams();
@@ -98,6 +99,56 @@ const GuestEvent = () => {
     }
   };
 
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+    tl.fromTo(
+      ".top-box",
+      {
+        x: -500,
+      },
+      {
+        x: 0,
+        duration: 1.5,
+      }
+    );
+    tl.fromTo(
+      ".mirror",
+      {
+        opacity: 0,
+        scale: 2,
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 1.5,
+      },
+      "-=0.5"
+    );
+    tl.fromTo(
+      ".box-bottom",
+      {
+        scale: 2,
+        opacity: 0,
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 1.5,
+      }
+    );
+    if (!isLoading) {
+      tl.fromTo(
+        ".songs",
+        {
+          x: -100,
+          opacity: 0,
+        },
+        { x: 0, opacity: 1, stagger: 0.2, duration: 0.4 }
+      );
+    }
+  }, []);
+
   return (
     <div>
       <div className="bg-red-100 text-center py-5 px-1">
@@ -118,9 +169,9 @@ const GuestEvent = () => {
       <div className="flex min-h-screen justify-center home-bg p-4">
         <div className="relative w-full max-w-2xl">
           {/* <!-- Top arrotondato (contenitore esterno) --> */}
-          <div className="neon-border-top relative mt-10 h-80 overflow-hidden rounded-t-full border-8 border-white bg-yellow-900 shadow-2xl">
+          <div className="neon-border-top relative mt-10 h-80 overflow-hidden rounded-t-full border-8 border-white bg-yellow-900 shadow-2xl top-box">
             {/* <!-- Specchio/Display centrale con bordi --> */}
-            <div className="absolute inset-8 flex flex-col items-center justify-center rounded-t-full border-4 border-yellow-800 bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 shadow-inner">
+            <div className="absolute inset-8 flex flex-col items-center justify-center rounded-t-full border-4 border-yellow-800 bg-gradient-to-b from-blue-300 via-blue-400 to-blue-500 shadow-inner mirror">
               <h1 className="text-center text-[2rem] sm:text-5xl font-bold text-white drop-shadow-l mt-5 font-imperial">
                 Banda Corta Jukebox
               </h1>
@@ -138,7 +189,7 @@ const GuestEvent = () => {
           </div>
 
           {/* <!-- Telaio per la lista --> */}
-          <div className="neon-border-bottom relative rounded-b-3xl border-8 border-white bg-yellow-900 p-6 shadow-2xl">
+          <div className="neon-border-bottom relative rounded-b-3xl border-8 border-white bg-yellow-900 p-6 shadow-2xl box-bottom">
             {/* <!-- Contenitore lista --> */}
             <div className="bg-opacity-60 max-h-96 overflow-y-auto rounded-lg border-4 border-yellow-600 bg-black p-4">
               {/* <!-- Lista canzoni --> */}
@@ -150,29 +201,28 @@ const GuestEvent = () => {
 
               <ul className="space-y-3">
                 {filteredSongs.map((song, index) => (
-                  <li
-                    key={`${song.id}-${index}`}
-                    className="bg-opacity-30 hover:bg-opacity-40 rounded bg-yellow-100 p-4 transition-all"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-semibold text-black font-poppins">
-                          {song.title}
+                  <div key={`${song.id}-${index}`} className="songs">
+                    <li className="bg-opacity-30 hover:bg-opacity-40 rounded bg-yellow-100 p-4 transition-all">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-black font-poppins">
+                            {song.title}
+                          </div>
+                          <div className="text-sm text-red-600 font-poppins">
+                            {song.artist}
+                          </div>
                         </div>
-                        <div className="text-sm text-red-600 font-poppins">
-                          {song.artist}
+                        <div className="text-center">
+                          <button
+                            className="bg-red-700 h-15 w-15 rounded-full hover:bg-red-800 cursor-pointer text-white"
+                            onClick={() => sendRequest(song.id)}
+                          >
+                            Richiedi
+                          </button>
                         </div>
                       </div>
-                      <div className="text-center">
-                        <button
-                          className="bg-red-700 h-15 w-15 rounded-full hover:bg-red-800 cursor-pointer text-white"
-                          onClick={() => sendRequest(song.id)}
-                        >
-                          Richiedi
-                        </button>
-                      </div>
-                    </div>
-                  </li>
+                    </li>
+                  </div>
                 ))}
               </ul>
             </div>
