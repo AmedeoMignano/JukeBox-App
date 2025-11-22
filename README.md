@@ -118,4 +118,13 @@ Guest e Admin vengono aggiornati live.
 👤 **Amedeo Mignano**  
 GitHub: https://github.com/AmedeoMignano
 
+---
+
+### 🌍 Deploy/Demo
+**Guest:**
+https://banda-corta-jukebox.vercel.app/
+
+**Admin:**
+https://juke-box-app-nine.vercel.app/
+
 
