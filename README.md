@@ -76,9 +76,22 @@ Gestisce:
 - React  
 - react-router-dom  
 - TailwindCSS  
-- axios  
+- axios
+- GSAP
 - SockJS + StompJS per WebSocket live  
 - React Bootstrap Icons  
+
+---
+
+## 📘 API Documentation
+
+È possibile consultare la documentazione OpenAPI/Swagger qui:
+
+🔗 **Swagger UI:**  
+https://rich-sheelagh-amedeomignano-0e8df352.koyeb.app/swagger-ui/index.html
+
+🔗 **OpenAPI JSON:**  
+https://rich-sheelagh-amedeomignano-0e8df352.koyeb.app/v3/api-docs
 
 ---
 
