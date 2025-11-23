@@ -33,7 +33,11 @@ public class SecurityConfig {
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity.authorizeHttpRequests(req ->
-                req.requestMatchers("/ws/**", "/app/**", "/topic/**", "/**").permitAll()
+                req.requestMatchers("/ws/**", "/app/**", "/topic/**", "/**", "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
+                        "/webjars/**").permitAll()
         );
         httpSecurity.cors(Customizer.withDefaults());
         return httpSecurity.build();

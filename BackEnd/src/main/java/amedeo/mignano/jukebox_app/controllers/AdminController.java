@@ -5,6 +5,9 @@ import amedeo.mignano.jukebox_app.exceptions.NotValidException;
 import amedeo.mignano.jukebox_app.payloads.user.UserDTO;
 import amedeo.mignano.jukebox_app.services.AuthService;
 import amedeo.mignano.jukebox_app.services.UsersService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +21,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Admin")
 public class AdminController {
     @Autowired
     private UsersService usersService;
@@ -25,6 +30,10 @@ public class AdminController {
     private AuthService authService;
 
     @PostMapping("/register")
+    @Operation(
+            description = "Register endpoint for create new Admin",
+            summary = "This endpoint is used by Admin to register new Admin"
+    )
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody @Validated UserDTO body,

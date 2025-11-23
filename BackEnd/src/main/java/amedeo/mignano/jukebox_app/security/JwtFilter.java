@@ -30,7 +30,12 @@ public class JwtFilter extends OncePerRequestFilter {
             "/ws/**",
             "/events/active",
             "/events/event/**",
-            "/requests/pending/**"
+            "/requests/pending/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/webjars/**"
     );
     @Autowired
     private JwtTools jwtTools;
