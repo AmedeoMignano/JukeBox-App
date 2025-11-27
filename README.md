@@ -46,6 +46,11 @@ Gestisce:
 - Admin Users tramite autenticazione JWT
 - WebSocket con STOMP per comunicazioni real-time
 
+### Schema Relazionale DB
+
+<img width="1200" height="776" alt="Schema DB" src="https://github.com/user-attachments/assets/8506dcb8-bc60-48a3-acf2-8a52ea6c3404" />
+
+
 ### 2️⃣ Frontend Admin (React)
 - Interfaccia gestionale
 - CRUD completo
