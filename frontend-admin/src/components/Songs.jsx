@@ -112,33 +112,40 @@ const Songs = () => {
       </div>
       <div className="bg-white rounded-2xl shadow-md p-6 mt-10 max-w-4xl mx-auto song-card">
         <ul className="divide-y divide-red-800">
-          {filteredSongs.map((song) => (
-            <li key={song.id} className="pb-5 pt-3">
-              <p className="font-medium text-[1.1rem]">
-                Titolo: <span className="text-red-700">{song.title}</span>
-              </p>
-              <p className="font-medium text-[1.1rem]">
-                Artista: <span className="text-red-700">{song.artist}</span>
-              </p>
-              <p className="font-medium text-[1.1rem]">
-                Categoria: <span className="text-red-700">{song.category}</span>
-              </p>
-              <div className="flex justify-between my-2">
-                <button
-                  className="flex items-center cursor-pointer shadow-button-red"
-                  onClick={() => handleDeleteSong(song.id, song.title)}
-                >
-                  Elimina <Trash className=" ms-2" />
-                </button>
-                <button
-                  className="flex items-center  cursor-pointer shadow-button-blue"
-                  onClick={() => handleEditSong(song)}
-                >
-                  Modifica <Pencil className=" ms-2" />
-                </button>
-              </div>
-            </li>
-          ))}
+          {filteredSongs.length > 0 ? (
+            filteredSongs.map((song) => (
+              <li key={song.id} className="pb-5 pt-3">
+                <p className="font-medium text-[1.1rem]">
+                  Titolo: <span className="text-red-700">{song.title}</span>
+                </p>
+                <p className="font-medium text-[1.1rem]">
+                  Artista: <span className="text-red-700">{song.artist}</span>
+                </p>
+                <p className="font-medium text-[1.1rem]">
+                  Categoria:{" "}
+                  <span className="text-red-700">{song.category}</span>
+                </p>
+                <div className="flex justify-between my-2">
+                  <button
+                    className="flex items-center cursor-pointer shadow-button-red"
+                    onClick={() => handleDeleteSong(song.id, song.title)}
+                  >
+                    Elimina <Trash className=" ms-2" />
+                  </button>
+                  <button
+                    className="flex items-center  cursor-pointer shadow-button-blue"
+                    onClick={() => handleEditSong(song)}
+                  >
+                    Modifica <Pencil className=" ms-2" />
+                  </button>
+                </div>
+              </li>
+            ))
+          ) : (
+            <p className="font-medium text-red-700">
+              Nessuna canzone corrispondente
+            </p>
+          )}
         </ul>
       </div>
       {isCreateSongModalOpen && (
