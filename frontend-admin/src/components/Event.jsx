@@ -42,7 +42,7 @@ const Event = () => {
         ease: "power3.inOut",
       });
     }
-  }, [filteredEvents, isLoading]);
+  }, [isLoading]);
 
   return (
     <div className="p-10 min-h-screen bg-gray-100">
